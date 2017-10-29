@@ -1,2 +1,18 @@
-node_modules/
+# OS specific folders
 .DS_Store
+
+# Build directory
+build/
+
+# Dependency directories
+node_modules/
+
+# Logs
+*.log*
+
+# Visual Studio Code
+.vscode/
+
+# Yarn
+yarn*
+!yarn.lock
