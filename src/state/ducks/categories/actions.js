@@ -1,5 +1,5 @@
 import * as types from "./types";
-import { createAction } from '../utils';
+import { createAction } from '../../utils';
 
 // Action creators
 
