@@ -48,11 +48,10 @@ const commentsReducer = createReducer(initialState)({
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,
     comments: state.comments.map((comment) => {
-      // if different id, return the same
-      // if the same id, update the score accordingly
-      return 
-    } 
-  })
+      if (payload.id !== comment.id) return comment;
+      return {...comment, voteScore: payload.voteScore};
+    }),
+  }),
 });
 
 export default commentsReducer;
