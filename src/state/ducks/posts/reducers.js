@@ -51,9 +51,9 @@ const postsReducer = createReducer(initialState)({
   }),
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,
-    posts: state.comments.map((comment) => {
-      if (payload.id !== comment.id) return comment;
-      return {...comment, voteScore: payload.voteScore};
+    posts: state.posts.map((post) => {
+      if (payload.id !== post.id) return post;
+      return {...post, voteScore: payload.voteScore};
     }),
   }),
 });
