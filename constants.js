@@ -1,3 +1,8 @@
+const isDev = process.env.NODE_ENV === 'development';
+
+// function to get a «dev» chunk
+const entryDev = isDev ? neutrino => neutrino.config.entry('dev').add('react-devtools') : null;
+
 // function to get a «vendor» chunk
 const entryVendor = (neutrino) => neutrino.config
   .entry('vendor')
@@ -11,4 +16,4 @@ const entryVendor = (neutrino) => neutrino.config
     .add('redux-thunk')
     .add('styled-jsx/style');
 
-module.exports = { entryVendor };
+module.exports = { entryDev, entryVendor };
