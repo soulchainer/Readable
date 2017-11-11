@@ -18,32 +18,32 @@ const initialState = {
 const commentsReducer = createReducer(initialState)({
   [types.ADD]: (state, { payload }) => ({
     ...state,
-    comments: payload,
+    comments: payload.comments,
   }),
   [types.CHANGE_SORTING_DIRECTION]: (state, { payload }) => ({
     ...state,
-    sortingDirection: payload,
+    sortingDirection: payload.sortingDirection,
   }),
   [types.CHANGE_SORTING_METHOD]: (state, { payload }) => ({
     ...state,
-    sortingMethod: payload,
+    sortingMethod: payload.sortingMethod,
   }),
   [types.DELETE]: (state, { payload }) => ({
     ...state,
     comments: state.comments.filter(({ id }) => {
-      return id !== payload;
+      return id !== payload.id;
     }),
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
-    comments: [
-      ...state.comments.filter(({ id }) => id !== payload.id),
-      payload,
-    ],
+    comments: state.comments.map((comment) => {
+      if (comment.id !== payload.id) return comment;
+      return {...coment, ...payload};
+    }),
   }),
   [types.GET]: (state, { payload }) => ({
     ...state,
-    comments: payload,
+    comments: payload.comments,
   }),
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,

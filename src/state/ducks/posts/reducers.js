@@ -25,36 +25,36 @@ const initialState = {
 const postsReducer = createReducer(initialState)({
   [types.ADD]: (state, { payload }) => ({
     ...state,
-    posts: payload,
+    posts: payload.posts,
   }),
   [types.CHANGE_SORTING_DIRECTION]: (state, { payload }) => ({
     ...state,
-    sortingDirection: payload,
+    sortingDirection: payload.sortingDirection,
   }),
   [types.CHANGE_SORTING_METHOD]: (state, { payload }) => ({
     ...state,
-    sortingMethod: payload,
+    sortingMethod: payload.sortingMethod,
   }),
   [types.DELETE]: (state, { payload }) => ({
     ...state,
     posts: state.posts.filter(({ id }) => {
-      return id !== payload;
+      return id !== payload.id;
     }),
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
-    posts: [
-      ...state.posts.filter(({ id }) => id !== payload.id),
-      payload,
-    ],
+    posts: state.posts.map((post) => {
+      if (post.id !== payload.id) return post;
+      return {...post, ...payload};
+    }),
   }),
   [types.GET_FROM_CATEGORY]: (state, { payload }) => ({
     ...state,
-    postsByCurrentCategory: payload,
+    postsByCurrentCategory: payload.posts,
   }),
   [types.GET]: (state, { payload }) => ({
     ...state,
-    posts: payload,
+    posts: payload.posts,
   }),
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,

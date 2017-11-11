@@ -13,7 +13,7 @@ import { createReducer } from "../../utils";
 const initialState = [];
 
 const categoriesReducer = createReducer(initialState)({
-  [types.GET]: (state, action) => action.payload,
+  [types.GET]: (state, { payload }) => payload.categories,
 });
 
 export default categoriesReducer;
