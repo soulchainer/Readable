@@ -29,11 +29,6 @@ export const deletePost = createAction(DELETE);
  */
 export const editPost = createAction(EDIT);
 /**
- * Will be dispatched from `fetchPostsFromCategory` thunk, which makes an API
- * request to get all posts of the given category name, after getting them all
- */
-export const getPostsFromCategory = createAction(GET_FROM_CATEGORY);
-/**
  * Will be dispatched from `fetchPosts` thunk, which makes an API request to
  * get all posts, after getting them all
  */
