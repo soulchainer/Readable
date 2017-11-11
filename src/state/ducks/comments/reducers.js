@@ -1,5 +1,5 @@
-import * as types from "./types";
-import { createReducer } from "../../utils";
+import * as types from './types';
+import { createReducer } from '../../utils';
 
 /* State shape
   {
@@ -30,15 +30,13 @@ const commentsReducer = createReducer(initialState)({
   }),
   [types.DELETE]: (state, { payload }) => ({
     ...state,
-    comments: state.comments.filter(({ id }) => {
-      return id !== payload.id;
-    }),
+    comments: state.comments.filter(({ id }) => id !== payload.id),
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
     comments: state.comments.map((comment) => {
       if (comment.id !== payload.id) return comment;
-      return {...coment, ...payload};
+      return { ...comment, ...payload };
     }),
   }),
   [types.GET]: (state, { payload }) => ({
@@ -49,7 +47,7 @@ const commentsReducer = createReducer(initialState)({
     ...state,
     comments: state.comments.map((comment) => {
       if (payload.id !== comment.id) return comment;
-      return {...comment, voteScore: payload.voteScore};
+      return { ...comment, voteScore: payload.voteScore };
     }),
   }),
 });

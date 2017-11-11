@@ -1,5 +1,5 @@
-import * as types from "./types";
-import { createReducer } from "../../utils";
+import * as types from './types';
+import { createReducer } from '../../utils';
 
 /* State shape
   {
@@ -37,15 +37,13 @@ const postsReducer = createReducer(initialState)({
   }),
   [types.DELETE]: (state, { payload }) => ({
     ...state,
-    posts: state.posts.filter(({ id }) => {
-      return id !== payload.id;
-    }),
+    posts: state.posts.filter(({ id }) => id !== payload.id),
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
     posts: state.posts.map((post) => {
       if (post.id !== payload.id) return post;
-      return {...post, ...payload};
+      return { ...post, ...payload };
     }),
   }),
   [types.GET_FROM_CATEGORY]: (state, { payload }) => ({
@@ -60,7 +58,7 @@ const postsReducer = createReducer(initialState)({
     ...state,
     posts: state.posts.map((post) => {
       if (payload.id !== post.id) return post;
-      return {...post, voteScore: payload.voteScore};
+      return { ...post, voteScore: payload.voteScore };
     }),
   }),
 });
