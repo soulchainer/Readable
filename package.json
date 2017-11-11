@@ -13,9 +13,9 @@
     "neutrino-preset-react": "^7.2.3",
     "neutrino-preset-styled-jsx": "^2.0.1",
     "react-devtools": "^3.0.0",
-    "redux-devtools": "^3.4.0",
+    "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.2",
-    "redux-devtools-log-monitor": "^1.3.0"
+    "redux-devtools-log-monitor": "^1.4.0"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
