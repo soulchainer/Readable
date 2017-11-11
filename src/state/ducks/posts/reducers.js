@@ -4,8 +4,6 @@ import { createReducer } from '../../utils';
 /* State shape
   {
     posts: [ post ], // all posts list
-    postsByCurrentCategory: [ categoryPost ], // all posts according to current
-    category
     // Posts details (of the actual post).
     // Cleared on `componentWillUnmount` (of post details page)
     postDetails: { postDetails }
