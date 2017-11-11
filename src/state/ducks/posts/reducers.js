@@ -4,6 +4,8 @@ import { createReducer } from "../../utils";
 /* State shape
   {
     posts: [ post ], // all posts list
+    postsByCurrentCategory: [ categoryPost ], // all posts according to current
+    category
     // Posts details (of the actual post).
     // Cleared on `componentWillUnmount` (of post details page)
     postDetails: { postDetails }
@@ -14,6 +16,7 @@ import { createReducer } from "../../utils";
 
 const initialState = {
   posts: [],
+  postsByCurrentCategory: [],
   postDetails: {},
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
@@ -40,10 +43,14 @@ const postsReducer = createReducer(initialState)({
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
-    comments: [
-      ...state.comments.filter(({ id }) => comment.id !== id),
+    posts: [
+      ...state.posts.filter(({ id }) => id !== payload.id),
       payload,
     ],
+  }),
+  [types.GET_FROM_CATEGORY]: (state, { payload }) => ({
+    ...state,
+    postsByCurrentCategory: payload,
   }),
   [types.GET]: (state, { payload }) => ({
     ...state,

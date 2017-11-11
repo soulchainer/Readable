@@ -37,7 +37,7 @@ const commentsReducer = createReducer(initialState)({
   [types.EDIT]: (state, { payload }) => ({
     ...state,
     comments: [
-      ...state.comments.filter(({ id }) => comment.id !== id),
+      ...state.comments.filter(({ id }) => id !== payload.id),
       payload,
     ],
   }),
