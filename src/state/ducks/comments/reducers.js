@@ -11,6 +11,8 @@ import { createReducer } from '../../utils';
 
 const initialState = {
   comments: [],
+  hasFailed: false,
+  isLoading: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
 };
@@ -39,9 +41,17 @@ const commentsReducer = createReducer(initialState)({
       return { ...comment, ...payload };
     }),
   }),
-  [types.GET]: (state, { payload }) => ({
+  [types.FETCHED]: (state, { payload }) => ({
     ...state,
     comments: payload.comments,
+  }),
+  [types.FETCH_ERROR]: (state, { payload }) => ({
+    ...state,
+    hasFailed: payload.hasFailed,
+  }),
+  [types.LOADING]: (state, { payload }) => ({
+    ...state,
+    isLoading: payload.isLoading,
   }),
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,

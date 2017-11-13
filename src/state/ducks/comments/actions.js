@@ -25,15 +25,19 @@ export const changeCommentsSortingMethod = createAction(types.CHANGE_SORTING_MET
  */
 export const deleteComment = createAction(types.DELETE);
 /**
- * Will be dispatched from `updateComment`, which makes an API request to update
- * a post comment details, after successfully doing it
+ * All of this actions will be dispatched from `editComment`, which makes an API
+ * request to edit a post comment details
  */
-export const editComment = createAction(types.EDIT);
+export const commentEditError = createAction(types.EDIT_ERROR);
+export const commentEditing = createAction(types.EDITING);
+export const commentEdited = createAction(types.EDITED);
 /**
- * Will be dispatched from `fetchComments` thunk, which makes an API request
- * to get all comments of the given post id, after getting them all
+ * All of this actions will be dispatched from `fetchComments` thunk, which
+ * makes an API request to get all comments from a post
  */
-export const getComments = createAction(types.GET);
+export const commentsFetchError = createAction(types.FETCH_ERROR);
+export const commentsAreLoading = createAction(types.LOADING);
+export const commentsFetched = createAction(types.FETCHED);
 /**
  * Will be dispatched from the `updateScore` thunk, triggered when the user
  * clicks on the buttons to update the `voteScore` of a comment.
