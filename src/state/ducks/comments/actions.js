@@ -4,10 +4,12 @@ import { createAction } from '../../utils';
 // Action creators
 
 /**
- * Will be dispatched from `addCommentThunk`, which makes an API request to
- * add a comment to a post, after successfully doing it
+ * All of this actions will be dispatched from `addComment`, which makes an API
+ * request to add a comment to a post
  */
-export const addComment = createAction(types.ADD);
+export const commentAddError = createAction(types.ADD_ERROR);
+export const commentAdded = createAction(types.ADDED);
+export const commentAdding = createAction(types.ADDING);
 /**
  * Will be dispatched when the user changes the sorting direction for the
  * comments list.
@@ -19,11 +21,12 @@ export const changeCommentsSortingDirection = createAction(types.CHANGE_SORTING_
  */
 export const changeCommentsSortingMethod = createAction(types.CHANGE_SORTING_METHOD);
 /**
- * Will be dispatched from `removeComment`, which makes an API request to remove
- * a comment from a post (set their `delete` flag to `true`), after
- * successfully doing it
+ * All of this actions will be dispatched from `deleteComment`, which makes an
+ * API request to delete a comment (set their `deleted` flag to `true`)
  */
-export const deleteComment = createAction(types.DELETE);
+export const commentDeleteError = createAction(types.DELETE_ERROR);
+export const commentDeleted = createAction(types.DELETED);
+export const commentDeleting = createAction(types.DELETING);
 /**
  * All of this actions will be dispatched from `editComment`, which makes an API
  * request to edit a post comment details

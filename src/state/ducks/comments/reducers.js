@@ -4,8 +4,10 @@ import { createReducer } from '../../utils';
 /* State shape
   {
     comments: [ comment ], // all current post comments (if we're on one)
+    addHasFailed: boolean,
     editHasFailed: boolean,
     loadHasFailed: boolean,
+    isAdding: boolean,
     isEditing: boolean,
     isLoading: boolean,
     sortingMethod: sortingMethod,
@@ -15,8 +17,12 @@ import { createReducer } from '../../utils';
 
 const initialState = {
   comments: [],
+  addHasFailed: false,
+  deleteHasFailed: false,
   editHasFailed: false,
   loadHasFailed: false,
+  isAdding: false,
+  isDeleting: false,
   isEditing: false,
   isLoading: false,
   sortingMethod: 'voteScore',
@@ -24,9 +30,17 @@ const initialState = {
 };
 
 const commentsReducer = createReducer(initialState)({
-  [types.ADD]: (state, { payload }) => ({
+  [types.ADDED]: (state, { payload }) => ({
     ...state,
-    comments: payload.comments,
+    comments: [...state.comments, payload.comment],
+  }),
+  [types.ADDING]: (state, { payload }) => ({
+    ...state,
+    isAdding: payload.isAdding,
+  }),
+  [types.ADD_ERROR]: (state, { payload }) => ({
+    ...state,
+    addHasFailed: payload.addHasFailed,
   }),
   [types.CHANGE_SORTING_DIRECTION]: (state, { payload }) => ({
     ...state,
@@ -36,9 +50,20 @@ const commentsReducer = createReducer(initialState)({
     ...state,
     sortingMethod: payload.sortingMethod,
   }),
-  [types.DELETE]: (state, { payload }) => ({
+  [types.DELETED]: (state, { payload }) => ({
     ...state,
-    comments: state.comments.filter(({ id }) => id !== payload.id),
+    comments: state.comments.map((comment) => {
+      if (comment.id !== payload.id) return comment;
+      return { ...comment, deleted: true };
+    }),
+  }),
+  [types.DELETING]: (state, { payload }) => ({
+    ...state,
+    isDeleting: payload.isDeleting,
+  }),
+  [types.DELETE_ERROR]: (state, { payload }) => ({
+    ...state,
+    deleteHasFailed: payload.deleteHasFailed,
   }),
   [types.EDITED]: (state, { payload }) => ({
     ...state,

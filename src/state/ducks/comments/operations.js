@@ -1,4 +1,10 @@
 import {
+  commentAddError,
+  commentAdded,
+  commentAdding,
+  commentDeleteError,
+  commentDeleting,
+  commentDeleted,
   commentEditError,
   commentEditing,
   commentEdited,
@@ -9,24 +15,82 @@ import {
 import { createRequestInit } from '../../utils';
 
 /**
+ * Add a comment to a post.
+ * @param {string} hostname Hostname of the app, `window.location.hostname`
+ * @param {object} params All the info needed to add the comment to the post
+ */
+const addComment = (hostname, params) => (dispatch) => {
+  const url = `//${hostname}:3001/comments`;
+  const {
+    author,
+    body,
+    id,
+    parentId,
+    timestamp,
+  } = params;
+  const init = {
+    
+  }
+  dispatch(commentAdding({ isAdding: true }));
+
+  fetch(url, createRequestInit(init))
+    .then((response) => {
+      if (!response.ok) throw Error(response.statusText);
+      dispatch(commentsAdding({ isAdding: false }));
+      return response;
+    })
+    .then(response => response.json())
+    .then(payload => dispatch(commentAdded(payload)))
+    .catch(() => dispatch(commentAddError({ addHasFailed: true })));
+};
+
+/**
+ * Delete a comment.
+ * @param {string} hostname Hostname of the app, `window.location.hostname`
+ * @param {string} id `id` of the comment to be deleted
+ */
+const deleteComment = (hostname, id) => (dispatch) => {
+  const url = `//${hostname}:3001/comments/${id}`;
+  const init = { method: 'DELETE' };
+  dispatch(commentDeleting({ isDeleting: true }));
+
+  fetch(url, createRequestInit(init))
+    .then((response) => {
+      if (!response.ok) throw Error(response.statusText);
+      dispatch(commentsDeleting({ isDeleting: false }));
+      return response;
+    })
+    .then(response => response.json())
+    .then(payload => dispatch(commentDeleted(payload)))
+    .catch(() => dispatch(commentDeleteError({ deleteHasFailed: true })));
+};
+
+/**
  * Edit a comment from a post.
  * @param {string} hostname Hostname of the app, `window.location.hostname`
  * @param {string} id id of the comment to be edited
  * @param {number} timestamp Current time at the moment the edit request is sent
  * @param {string} body The new content for the comment
  */
-const editComment = (hostname, id) => (dispatch) => {
+const editComment = (hostname, id, body) => (dispatch) => {
   const url = `//${hostname}:3001/comments/${id}`;
+  const init = {
+    method: 'PUT',
+    body: JSON.stringify({
+      timestamp: new Date().getTime(),
+      body,
+    }),
+  };
   dispatch(commentEditing({ isEditing: true }));
 
-  fetch(url, createRequestInit())
+  fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
       dispatch(commentsEditing({ isEditing: false }));
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(commentEdited(payload)))
+    .then(response => dispatch(commentEdited(response)))
     .catch(() => dispatch(commentEditError({ editHasFailed: true })));
 };
 
@@ -46,11 +110,13 @@ const fetchComments = (hostname, id) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(commentsFetched(payload)))
+    .then(response => dispatch(commentsFetched(response)))
     .catch(() => dispatch(commentsFetchError({ loadHasFailed: true })));
 };
 
 export {
+  addComment,
+  deleteComment,
   editComment,
   fetchComments,
 };

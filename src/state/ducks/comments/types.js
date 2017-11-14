@@ -14,7 +14,6 @@ export const ADDING = 'comments/ADDING';
 export const ADD_ERROR = 'comments/ADD_ERROR';
 export const CHANGE_SORTING_DIRECTION = 'comments/CHANGE_SORTING_DIRECTION';
 export const CHANGE_SORTING_METHOD = 'comments/CHANGE_SORTING_METHOD';
-export const DELETE = 'comments/DELETE';
 /**
  * Dispatched after comment were succesfully deleted on the server
  */
