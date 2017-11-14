@@ -1,4 +1,7 @@
 import {
+  commentEditError,
+  commentEditing,
+  commentEdited,
   commentsFetchError,
   commentsAreLoading,
   commentsFetched,
@@ -14,17 +17,17 @@ import { createRequestInit } from '../../utils';
  */
 const editComment = (hostname, id) => (dispatch) => {
   const url = `//${hostname}:3001/comments/${id}`;
-  dispatch(commentsAreLoading({ isLoading: true }));
+  dispatch(commentEditing({ isEditing: true }));
 
   fetch(url, createRequestInit())
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentsAreLoading({ isLoading: false }));
+      dispatch(commentsEditing({ isEditing: false }));
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(commentsFetched(payload)))
-    .catch(() => dispatch(commentsFetchError({ hasFailed: true })));
+    .then(payload => dispatch(commentEdited(payload)))
+    .catch(() => dispatch(commentEditError({ editHasFailed: true })));
 };
 
 /**
@@ -44,7 +47,7 @@ const fetchComments = (hostname, id) => (dispatch) => {
     })
     .then(response => response.json())
     .then(payload => dispatch(commentsFetched(payload)))
-    .catch(() => dispatch(commentsFetchError({ hasFailed: true })));
+    .catch(() => dispatch(commentsFetchError({ loadHasFailed: true })));
 };
 
 export {

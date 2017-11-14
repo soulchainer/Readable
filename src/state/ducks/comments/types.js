@@ -1,8 +1,32 @@
 // Action types
-export const ADD = 'comments/ADD';
+
+/**
+ * Dispatched after comment were succesfully added on the server
+ */
+export const ADDED = 'comments/ADDED';
+/**
+ * Dispatched when an API call to add a comment to a post is sent
+ */
+export const ADDING = 'comments/ADDING';
+/**
+ * Dispatched when an API call to add a comment to a post fails
+ */
+export const ADD_ERROR = 'comments/ADD_ERROR';
 export const CHANGE_SORTING_DIRECTION = 'comments/CHANGE_SORTING_DIRECTION';
 export const CHANGE_SORTING_METHOD = 'comments/CHANGE_SORTING_METHOD';
 export const DELETE = 'comments/DELETE';
+/**
+ * Dispatched after comment were succesfully deleted on the server
+ */
+export const DELETED = 'comments/DELETED';
+/**
+ * Dispatched when an API call to delete a comment is sent
+ */
+export const DELETING = 'comments/DELETING';
+/**
+ * Dispatched when an API call to delete a comment fails
+ */
+export const DELETE_ERROR = 'comments/DELETE_ERROR';
 /**
  * Dispatched after comment were succesfully edited on the server
  */

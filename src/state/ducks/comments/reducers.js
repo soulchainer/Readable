@@ -4,6 +4,10 @@ import { createReducer } from '../../utils';
 /* State shape
   {
     comments: [ comment ], // all current post comments (if we're on one)
+    editHasFailed: boolean,
+    loadHasFailed: boolean,
+    isEditing: boolean,
+    isLoading: boolean,
     sortingMethod: sortingMethod,
     sortingDirection: sortingDirection
   }
@@ -11,7 +15,9 @@ import { createReducer } from '../../utils';
 
 const initialState = {
   comments: [],
-  hasFailed: false,
+  editHasFailed: false,
+  loadHasFailed: false,
+  isEditing: false,
   isLoading: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
@@ -34,12 +40,20 @@ const commentsReducer = createReducer(initialState)({
     ...state,
     comments: state.comments.filter(({ id }) => id !== payload.id),
   }),
-  [types.EDIT]: (state, { payload }) => ({
+  [types.EDITED]: (state, { payload }) => ({
     ...state,
     comments: state.comments.map((comment) => {
       if (comment.id !== payload.id) return comment;
       return { ...comment, ...payload };
     }),
+  }),
+  [types.EDITING]: (state, { payload }) => ({
+    ...state,
+    isEditing: payload.isEditing,
+  }),
+  [types.EDIT_ERROR]: (state, { payload }) => ({
+    ...state,
+    editHasFailed: payload.editHasFailed,
   }),
   [types.FETCHED]: (state, { payload }) => ({
     ...state,
@@ -47,7 +61,7 @@ const commentsReducer = createReducer(initialState)({
   }),
   [types.FETCH_ERROR]: (state, { payload }) => ({
     ...state,
-    hasFailed: payload.hasFailed,
+    loadHasFailed: payload.loadHasFailed,
   }),
   [types.LOADING]: (state, { payload }) => ({
     ...state,
