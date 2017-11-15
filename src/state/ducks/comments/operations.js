@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4';
 import {
   commentAddError,
   commentAdded,
@@ -12,7 +13,10 @@ import {
   commentsAreLoading,
   commentsFetched,
 } from './actions';
-import { createRequestInit } from '../../utils';
+import {
+  createRequestInit,
+  getTimestamp,
+} from '../../utils';
 
 /**
  * Add a comment to a post.
@@ -24,19 +28,26 @@ const addComment = (hostname, params) => (dispatch) => {
   const {
     author,
     body,
-    id,
     parentId,
-    timestamp,
   } = params;
+  const id = uuidv4();
   const init = {
-    
-  }
+    method: 'POST',
+    body: JSON.stringify({
+      author,
+      body,
+      id,
+      parentId,
+      timestamp: getTimestamp(),
+    }),
+  };
+
   dispatch(commentAdding({ isAdding: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentsAdding({ isAdding: false }));
+      dispatch(commentAdding({ isAdding: false }));
       return response;
     })
     .then(response => response.json())
@@ -57,7 +68,7 @@ const deleteComment = (hostname, id) => (dispatch) => {
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentsDeleting({ isDeleting: false }));
+      dispatch(commentDeleting({ isDeleting: false }));
       return response;
     })
     .then(response => response.json())
@@ -77,7 +88,7 @@ const editComment = (hostname, id, body) => (dispatch) => {
   const init = {
     method: 'PUT',
     body: JSON.stringify({
-      timestamp: new Date().getTime(),
+      timestamp: getTimestamp(),
       body,
     }),
   };
@@ -86,7 +97,7 @@ const editComment = (hostname, id, body) => (dispatch) => {
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentsEditing({ isEditing: false }));
+      dispatch(commentEditing({ isEditing: false }));
       return response;
     })
     .then(response => response.json())
@@ -110,7 +121,7 @@ const fetchComments = (hostname, id) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(response => dispatch(commentsFetched(response)))
+    .then(comments => dispatch(commentsFetched({ comments })))
     .catch(() => dispatch(commentsFetchError({ loadHasFailed: true })));
 };
 
