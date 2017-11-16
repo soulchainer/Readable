@@ -36,9 +36,17 @@ const initialState = {
 };
 
 const postsReducer = createReducer(initialState)({
-  [types.ADD]: (state, { payload }) => ({
+  [types.ADDED]: (state, { payload }) => ({
     ...state,
-    posts: payload.posts,
+    posts: [...state.posts, payload.post],
+  }),
+  [types.ADDING]: (state, { payload }) => ({
+    ...state,
+    isAdding: payload.isAdding,
+  }),
+  [types.ADD_ERROR]: (state, { payload }) => ({
+    ...state,
+    addHasFailed: payload.addHasFailed,
   }),
   [types.CHANGE_SORTING_DIRECTION]: (state, { payload }) => ({
     ...state,
@@ -48,9 +56,21 @@ const postsReducer = createReducer(initialState)({
     ...state,
     sortingMethod: payload.sortingMethod,
   }),
-  [types.DELETE]: (state, { payload }) => ({
+  [types.DELETED]: (state, { payload }) => ({
+    ...state, // voy por aquí, tengo que coger todos sus comentarios y
+    // marcar su parentDeleted a `true`
+    posts: state.posts.map((post) => {
+      if (post.id !== payload.id) return post;
+      return { ...post, deleted: true };
+    }),
+  }),
+  [types.DELETING]: (state, { payload }) => ({
     ...state,
-    posts: state.posts.filter(({ id }) => id !== payload.id),
+    isDeleting: payload.isDeleting,
+  }),
+  [types.DELETE_ERROR]: (state, { payload }) => ({
+    ...state,
+    deleteHasFailed: payload.deleteHasFailed,
   }),
   [types.EDIT]: (state, { payload }) => ({
     ...state,
@@ -58,6 +78,14 @@ const postsReducer = createReducer(initialState)({
       if (post.id !== payload.id) return post;
       return { ...post, ...payload };
     }),
+  }),
+  [types.EDITING]: (state, { payload }) => ({
+    ...state,
+    isEditing: payload.isEditing,
+  }),
+  [types.EDIT_ERROR]: (state, { payload }) => ({
+    ...state,
+    editHasFailed: payload.editHasFailed,
   }),
   [types.GET_FROM_CATEGORY]: (state, { payload }) => ({
     ...state,
