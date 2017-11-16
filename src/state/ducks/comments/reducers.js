@@ -5,9 +5,11 @@ import { createReducer } from '../../utils';
   {
     comments: [ comment ], // all current post comments (if we're on one)
     addHasFailed: boolean,
+    deleteHasFailed: boolean,
     editHasFailed: boolean,
     loadHasFailed: boolean,
     isAdding: boolean,
+    isDeleting: boolean,
     isEditing: boolean,
     isLoading: boolean,
     sortingMethod: sortingMethod,

@@ -50,6 +50,10 @@ export const FETCH_ERROR = 'posts/FETCH_ERROR';
  * Dispatched when an API call to fetch all posts is sent
  */
 export const LOADING = 'posts/LOADING';
-
+/**
+ * Dispatched to select all the posts from a category. This doesn't make an API
+ * call, because the app already has the list of all post
+ * (it recovers all posts in the first load of the page)
+ */
 export const GET_FROM_CATEGORY = 'posts/GET_FROM_CATEGORY';
 export const UPDATE_VOTE_SCORE = 'posts/UPDATE_VOTE_SCORE';

@@ -6,7 +6,15 @@ import { createReducer } from '../../utils';
     posts: [ post ], // all posts list
     // Posts details (of the actual post).
     // Cleared on `componentWillUnmount` (of post details page)
-    postDetails: { postDetails }
+    postDetails: { postDetails },
+    addHasFailed: boolean,
+    deleteHasFailed: boolean,
+    editHasFailed: boolean,
+    loadHasFailed: boolean,
+    isAdding: boolean,
+    isDeleting: boolean,
+    isEditing: boolean,
+    isLoading: boolean,
     sortingMethod: sortingMethod,
     sortingDirection: sortingDirection
   }
@@ -14,8 +22,15 @@ import { createReducer } from '../../utils';
 
 const initialState = {
   posts: [],
-  postsByCurrentCategory: [],
   postDetails: {},
+  addHasFailed: false,
+  deleteHasFailed: false,
+  editHasFailed: false,
+  loadHasFailed: false,
+  isAdding: false,
+  isDeleting: false,
+  isEditing: false,
+  isLoading: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
 };
