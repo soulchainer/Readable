@@ -1,8 +1,8 @@
 const sortingMethods = [
   'timestamp',
-  'voteScore'
+  'voteScore',
 ];
 
 export {
-  sortingMethods
+  sortingMethods,
 };

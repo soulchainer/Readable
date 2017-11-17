@@ -20,25 +20,22 @@ import {
 
 /**
  * Add a new post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {object} params All the info needed to add the new post
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {Object} params All the info needed to add the new post.
+ * @param {string} params.author The post's author.
+ * @param {string} params.body The post's body.
+ * @param {string} params.category The post's category.
+ * @param {string} params.title The post's title.
  */
 const addPost = (hostname, params) => (dispatch) => {
   const url = `//${hostname}:3001/posts`;
-  const {
-    author,
-    body,
-    parentId,
-  } = params;
   const id = uuidv4();
   const init = {
     method: 'POST',
     body: JSON.stringify({
-      author,
-      body,
       id,
-      parentId,
       timestamp: getTimestamp(),
+      ...params,
     }),
   };
 
@@ -51,16 +48,16 @@ const addPost = (hostname, params) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(postAdded(payload)))
+    .then(post => dispatch(postAdded({ post })))
     .catch(() => dispatch(postAddError({ addHasFailed: true })));
 };
 
 /**
  * Delete a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {string} id `id` of the post to be deleted
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {string} id `id` of the post to be deleted.
  */
-const deletePostt = (hostname, id) => (dispatch) => {
+const deletePost = (hostname, id) => (dispatch) => {
   const url = `//${hostname}:3001/posts/${id}`;
   const init = { method: 'DELETE' };
   dispatch(postDeleting({ isDeleting: true }));
@@ -72,24 +69,24 @@ const deletePostt = (hostname, id) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(posttDeleted(payload)))
+    .then(() => dispatch(postDeleted({ id })))
     .catch(() => dispatch(postDeleteError({ deleteHasFailed: true })));
 };
 
 /**
  * Edit a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {string} id id of the post to be edited
- * @param {number} timestamp Current time at the moment the edit request is sent
- * @param {string} body The new content for the post
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {string} id id of the post to be edited.
+ * @param {Object} params - All the info to be changed in the post.
+ * @param {string} [params.body] - The post's body (optional).
+ * @param {string} [params.title] - The post's title (optional).
  */
-const editPost = (hostname, id, body) => (dispatch) => {
+const editPost = (hostname, id, params) => (dispatch) => {
   const url = `//${hostname}:3001/posts/${id}`;
   const init = {
     method: 'PUT',
     body: JSON.stringify({
-      timestamp: getTimestamp(),
-      body,
+      ...params,
     }),
   };
   dispatch(postEditing({ isEditing: true }));
@@ -101,15 +98,15 @@ const editPost = (hostname, id, body) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(response => dispatch(postEdited(response)))
+    .then(post => dispatch(postEdited({ post })))
     .catch(() => dispatch(postEditError({ editHasFailed: true })));
 };
 
 /**
  * Recover all the posts from the server.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
  */
-const fetchPosts = (hostname) => (dispatch) => {
+const fetchPosts = hostname => (dispatch) => {
   const url = `//${hostname}:3001/posts`;
   dispatch(postsAreLoading({ isLoading: true }));
 
@@ -120,7 +117,7 @@ const fetchPosts = (hostname) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(comments => dispatch(postsFetched({ posts })))
+    .then(posts => dispatch(postsFetched({ posts })))
     .catch(() => dispatch(postsFetchError({ loadHasFailed: true })));
 };
 

@@ -7,7 +7,7 @@ import { createRequestInit } from '../../utils';
 
 /**
  *
- * @param {string} hostname Hostname of the app, `window.location.hostname`
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
  */
 const fetchCategories = hostname => (dispatch) => {
   const url = `//${hostname}:3001/categories`;

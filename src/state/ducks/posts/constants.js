@@ -3,9 +3,9 @@ const sortingMethods = [
   'commentCount',
   'timestamp',
   'title',
-  'voteScore'
+  'voteScore',
 ];
 
 export {
-  sortingMethods
+  sortingMethods,
 };

@@ -57,8 +57,7 @@ const postsReducer = createReducer(initialState)({
     sortingMethod: payload.sortingMethod,
   }),
   [types.DELETED]: (state, { payload }) => ({
-    ...state, // voy por aquí, tengo que coger todos sus comentarios y
-    // marcar su parentDeleted a `true`
+    ...state,
     posts: state.posts.map((post) => {
       if (post.id !== payload.id) return post;
       return { ...post, deleted: true };
@@ -72,11 +71,11 @@ const postsReducer = createReducer(initialState)({
     ...state,
     deleteHasFailed: payload.deleteHasFailed,
   }),
-  [types.EDIT]: (state, { payload }) => ({
+  [types.EDITED]: (state, { payload }) => ({
     ...state,
     posts: state.posts.map((post) => {
       if (post.id !== payload.id) return post;
-      return { ...post, ...payload };
+      return { ...post, ...payload.post };
     }),
   }),
   [types.EDITING]: (state, { payload }) => ({
@@ -87,13 +86,17 @@ const postsReducer = createReducer(initialState)({
     ...state,
     editHasFailed: payload.editHasFailed,
   }),
-  [types.GET_FROM_CATEGORY]: (state, { payload }) => ({
-    ...state,
-    postsByCurrentCategory: payload.posts,
-  }),
-  [types.GET]: (state, { payload }) => ({
+  [types.FETCHED]: (state, { payload }) => ({
     ...state,
     posts: payload.posts,
+  }),
+  [types.FETCH_ERROR]: (state, { payload }) => ({
+    ...state,
+    loadHasFailed: payload.loadHasFailed,
+  }),
+  [types.LOADING]: (state, { payload }) => ({
+    ...state,
+    isLoading: payload.isLoading,
   }),
   [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
     ...state,

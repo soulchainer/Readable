@@ -5,22 +5,23 @@ import { sortingMethods } from './constants';
  * Sort the `comments` by `sortingMethod` and `sortingDirection`
  */
 const getSortedComments = (comments, {
-  sortingDirection='DESC',
-  sortingMethod='voteScore'
+  sortingDirection = 'DESC',
+  sortingMethod = 'voteScore',
 }) => {
   if (sortingMethods.indexOf(sortingMethod) === -1) {
     throw new Error(`Unknown sorting method: ${sortingMethod}`);
   }
   if (['ASC', 'DESC'].indexOf(sortingDirection) === -1) {
-    throw new Error(`Unknown sorting direction: ${sorthingDirection}`);
+    throw new Error(`Unknown sorting direction: ${sortingDirection}`);
   }
 
   const compareFunction = createCompareFunc(sortingDirection, sortingMethod);
 
   // temporary array holds objects with position and sort-value
-  let mapped = comments.map((comment, index) => ({
+  const mapped = comments.map((comment, index) => ({
     index,
-    value: String(comment[sortingMethod]).toLowerCase() }))
+    value: String(comment[sortingMethod]).toLowerCase(),
+  }));
   // sorting the mapped array containing the reduced values
   mapped.sort(compareFunction);
   // container for the resulting order
@@ -39,5 +40,5 @@ const getVisibleComments = comments => (
 
 export default {
   getSortedComments,
-  getVisibleComments
+  getVisibleComments,
 };

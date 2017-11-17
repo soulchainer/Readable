@@ -20,25 +20,21 @@ import {
 
 /**
  * Add a comment to a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {object} params All the info needed to add the comment to the post
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {Object} params - All the info needed to add the comment to the post.
+ * @param {string} params.author - The comment's author.
+ * @param {string} params.body - The comment's body.
+ * @param {string} params.parentId - The parent post's unique ID.
  */
 const addComment = (hostname, params) => (dispatch) => {
   const url = `//${hostname}:3001/comments`;
-  const {
-    author,
-    body,
-    parentId,
-  } = params;
   const id = uuidv4();
   const init = {
     method: 'POST',
     body: JSON.stringify({
-      author,
-      body,
       id,
-      parentId,
       timestamp: getTimestamp(),
+      ...params,
     }),
   };
 
@@ -51,14 +47,14 @@ const addComment = (hostname, params) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(commentAdded(payload)))
+    .then(comment => dispatch(commentAdded({ comment })))
     .catch(() => dispatch(commentAddError({ addHasFailed: true })));
 };
 
 /**
  * Delete a comment.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {string} id `id` of the comment to be deleted
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {string} id `id` of the comment to be deleted.
  */
 const deleteComment = (hostname, id) => (dispatch) => {
   const url = `//${hostname}:3001/comments/${id}`;
@@ -72,16 +68,15 @@ const deleteComment = (hostname, id) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(commentDeleted(payload)))
+    .then(() => dispatch(commentDeleted({ id })))
     .catch(() => dispatch(commentDeleteError({ deleteHasFailed: true })));
 };
 
 /**
  * Edit a comment from a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {string} id id of the comment to be edited
- * @param {number} timestamp Current time at the moment the edit request is sent
- * @param {string} body The new content for the comment
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {string} id id of the comment to be edited.
+ * @param {string} body The new content for the comment.
  */
 const editComment = (hostname, id, body) => (dispatch) => {
   const url = `//${hostname}:3001/comments/${id}`;
@@ -101,14 +96,14 @@ const editComment = (hostname, id, body) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(response => dispatch(commentEdited(response)))
+    .then(comment => dispatch(commentEdited({ comment })))
     .catch(() => dispatch(commentEditError({ editHasFailed: true })));
 };
 
 /**
  * Recover all the comments from a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`
- * @param {string} id id of the post whose comments will be recovered
+ * @param {string} hostname Hostname of the app, `window.location.hostname`.
+ * @param {string} id id of the post whose comments will be recovered.
  */
 const fetchComments = (hostname, id) => (dispatch) => {
   const url = `//${hostname}:3001/posts/${id}/comments`;
