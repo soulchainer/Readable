@@ -1,4 +1,4 @@
-import { createCompareFunc } from '../../utils';
+import { createCompareFunc, sortContent } from '../../utils';
 import { sortingMethods } from './constants';
 
 /**
@@ -15,30 +15,20 @@ const getSortedComments = (comments, {
     throw new Error(`Unknown sorting direction: ${sortingDirection}`);
   }
 
-  const compareFunction = createCompareFunc(sortingDirection, sortingMethod);
+  const compareFunction = createCompareFunc(sortingDirection);
 
-  // temporary array holds objects with position and sort-value
-  const mapped = comments.map((comment, index) => ({
-    index,
-    value: String(comment[sortingMethod]).toLowerCase(),
-  }));
-  // sorting the mapped array containing the reduced values
-  mapped.sort(compareFunction);
-  // container for the resulting order
-  const sortedComments = mapped.map(comment => comments[comment.index]);
-
-  return sortedComments;
+  return sortContent(comments, compareFunction, sortingMethod);
 };
 
 /**
- * Filter the `comments` from Redux `state` and return the comment whose have
- * their `deleted` flag to `false`.
+ * Filter the `comments` from Redux `state` and return those whose their
+ * `deleted` flag is set to `false`.
  */
 const getVisibleComments = comments => (
   comments.filter(comment => !comment.deleted)
 );
 
-export default {
+export {
   getSortedComments,
   getVisibleComments,
 };

@@ -2,7 +2,7 @@ import * as types from './types';
 import { createReducer } from '../../utils';
 
 const initialState = {
-  comments: [], // current post comments (current view is a post details view)
+  comments: [], // Current post comments (current view is a post details view)
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
@@ -18,7 +18,7 @@ const initialState = {
 const commentsReducer = createReducer(initialState)({
   [types.ADDED]: (state, { payload }) => ({
     ...state,
-    comments: [...state.comments, payload.comment],
+    comments: [...state.comments, ...payload.comment],
   }),
   [types.ADDING]: (state, { payload }) => ({
     ...state,

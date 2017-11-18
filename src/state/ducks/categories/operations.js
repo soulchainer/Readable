@@ -20,9 +20,9 @@ const fetchCategories = hostname => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then((payload) => {
+    .then((response) => {
       /** Transform `categories` in a more suitable data structure */
-      const { categories } = payload;
+      const { categories } = response;
       const cats = {};
       categories.forEach((category) => {
         cats[category.name] = category.path;

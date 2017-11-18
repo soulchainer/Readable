@@ -1,4 +1,4 @@
-import { createCompareFunc } from '../../utils';
+import { createCompareFunc, sortContent } from '../../utils';
 import { sortingMethods } from './constants';
 
 /**
@@ -25,17 +25,7 @@ const getSortedPosts = (posts, {
 
   const compareFunction = createCompareFunc(sortingDirection);
 
-  // temporary array holds objects with position and sort-value
-  const mapped = posts.map((post, index) => ({
-    index,
-    value: String(post[sortingMethod]).toLowerCase(),
-  }));
-  // sorting the mapped array containing the reduced values
-  mapped.sort(compareFunction);
-  // container for the resulting order
-  const sortedPosts = mapped.map(post => posts[post.index]);
-
-  return sortedPosts;
+  return sortContent(posts, compareFunction, sortingMethod);
 };
 
 /**
