@@ -1,28 +1,9 @@
 import * as types from './types';
 import { createReducer } from '../../utils';
 
-/* State shape
-  {
-    posts: [ post ], // all posts list
-    // Posts details (of the actual post).
-    // Cleared on `componentWillUnmount` (of post details page)
-    postDetails: { postDetails },
-    addHasFailed: boolean,
-    deleteHasFailed: boolean,
-    editHasFailed: boolean,
-    loadHasFailed: boolean,
-    isAdding: boolean,
-    isDeleting: boolean,
-    isEditing: boolean,
-    isLoading: boolean,
-    sortingMethod: sortingMethod,
-    sortingDirection: sortingDirection
-  }
-*/
-
 const initialState = {
-  posts: [],
-  postDetails: {},
+  posts: [], // all posts list
+  postDetails: {}, // post details (current view is a post details view)
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,

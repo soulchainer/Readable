@@ -29,7 +29,7 @@ const fetchCategories = hostname => (dispatch) => {
       });
       dispatch(categoriesFetched({ categories: cats }));
     })
-    .catch(() => dispatch(categoriesFetchError({ hasFailed: true })));
+    .catch(() => dispatch(categoriesFetchError({ loadHasFailed: true })));
 };
 
 export {

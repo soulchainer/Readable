@@ -1,24 +1,8 @@
 import * as types from './types';
 import { createReducer } from '../../utils';
 
-/* State shape
-  {
-    comments: [ comment ], // all current post comments (if we're on one)
-    addHasFailed: boolean,
-    deleteHasFailed: boolean,
-    editHasFailed: boolean,
-    loadHasFailed: boolean,
-    isAdding: boolean,
-    isDeleting: boolean,
-    isEditing: boolean,
-    isLoading: boolean,
-    sortingMethod: sortingMethod,
-    sortingDirection: sortingDirection
-  }
-*/
-
 const initialState = {
-  comments: [],
+  comments: [], // current post comments (current view is a post details view)
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
