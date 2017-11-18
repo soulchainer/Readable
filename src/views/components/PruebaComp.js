@@ -54,7 +54,7 @@ class PruebaComp extends Component {
 }
 
 PruebaComp.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.objectOf(PropTypes.string).isRequired,
   comments: PropTypes.arrayOf(PropTypes.object).isRequired,
   addComment: PropTypes.func.isRequired,
   // addPost: PropTypes.func.isRequired,

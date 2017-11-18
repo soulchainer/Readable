@@ -3,7 +3,7 @@ import { createReducer } from '../../utils';
 
 /* State shape
 {
-  categories: [ { name: category_name, path: category_path } ],
+  categories: { category_name: category_path },
   hasFailed: boolean, // categories fetching failed
   isLoading: boolean // categories are being fetched from the server
 }
@@ -11,7 +11,7 @@ import { createReducer } from '../../utils';
 */
 
 const initialState = {
-  categories: [],
+  categories: {},
   hasFailed: false,
   isLoading: false,
 };

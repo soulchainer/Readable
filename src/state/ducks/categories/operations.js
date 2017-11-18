@@ -20,7 +20,15 @@ const fetchCategories = hostname => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(payload => dispatch(categoriesFetched(payload)))
+    .then((payload) => {
+      /** Transform `categories` in a more suitable data structure */
+      const { categories } = payload;
+      const cats = {};
+      categories.forEach((category) => {
+        cats[category.name] = category.path;
+      });
+      dispatch(categoriesFetched({ categories: cats }));
+    })
     .catch(() => dispatch(categoriesFetchError({ hasFailed: true })));
 };
 
