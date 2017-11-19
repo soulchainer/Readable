@@ -9,5 +9,6 @@ module.exports = {
     'neutrino-preset-airbnb',
     'neutrino-preset-styled-jsx',
     'custom-presets/custom-eslint-config',
+    'custom-presets/absolute-imports',
   ]
 };

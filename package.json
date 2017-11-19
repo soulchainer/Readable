@@ -3,9 +3,9 @@
   "description": "A content and comment web app",
   "author": "Juan Riquelme <juanriqgon@protonmail.com>",
   "scripts": {
-    "start": "neutrino start",
     "build": "neutrino build",
-    "react-devtools": "react-devtools"
+    "react-devtools": "react-devtools",
+    "start": "neutrino start"
   },
   "devDependencies": {
     "neutrino": "^7.2.3",

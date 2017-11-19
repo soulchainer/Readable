@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import App from './App';
+import App from '../App';
 
 class Root extends Component {
   state = { devtools: null };
@@ -13,7 +13,7 @@ class Root extends Component {
     const { NODE_ENV: env } = process.env;
     const isDev = env === 'development';
     if (isDev) {
-      import('./DevTools')
+      import('../DevTools')
         .then(module => this.setState({ devtools: module.default }));
     }
   }
