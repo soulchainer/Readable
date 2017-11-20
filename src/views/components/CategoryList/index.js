@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { withRouter } from 'react-router';
 import { withLastLocation } from 'react-router-last-location';
+import { withRouter } from 'react-router';
 import { Category } from 'views/components';
 
 class CategoryList extends Component {
   componentDidMount() {
-    const { fetchCategories, lastLocation } = this.props;
-    console.log(lastLocation); // eslint-disable-line
-    fetchCategories();
+    const {
+      fetchCategories,
+      lastLocation: lastPath,
+      location: { pathname: currentPath },
+    } = this.props;
+    const shouldFetchCategories = !lastPath || currentPath === '/';
+    if (shouldFetchCategories) fetchCategories();
   }
 
   render() {
@@ -33,13 +37,19 @@ class CategoryList extends Component {
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 CategoryList.propTypes = {
   categories: PropTypes.objectOf(PropTypes.string).isRequired,
-  fetchCategories: PropTypes.func.isRequired, // eslint-disable-line
-  // eslint-disable-next-line
-  lastLocation: PropTypes.object, 
+  fetchCategories: PropTypes.func.isRequired,
+  lastLocation: PropTypes.object,
+  location: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   loadHasFailed: PropTypes.bool.isRequired,
 };
+/* eslint-enable react/forbid-prop-types */
 
-export default withLastLocation(CategoryList);
+CategoryList.defaultProps = {
+  lastLocation: null,
+};
+
+export default withLastLocation(withRouter(CategoryList));
