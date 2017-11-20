@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
+import { withLastLocation } from 'react-router-last-location';
 import { PostCard } from 'views/components';
 
 class PostCardList extends Component {
   componentDidMount() {
-    const { history } = this.props;
-    console.log(history); // eslint-disable-line
+    const { fetchPosts, lastLocation } = this.props;
+    console.log(lastLocation); // eslint-disable-line
+    fetchPosts();
   }
 
   render() {
@@ -15,9 +17,9 @@ class PostCardList extends Component {
       loadHasFailed, // eslint-disable-line
       posts,
     } = this.props;
-    const postCardList = Object.keys(posts).map(post => (
-      <li>
-        <PostCard key={post.id} {...post} />
+    const postCardList = posts.map(post => (
+      <li key={post.id}>
+        <PostCard {...post} />
       </li>
     ));
     return (
@@ -30,11 +32,11 @@ class PostCardList extends Component {
 
 PostCardList.propTypes = {
   fetchPosts: PropTypes.func.isRequired, // eslint-disable-line
-  // eslint-disable-next-line react/forbid-prop-types
-  history: PropTypes.object.isRequired,
+  // eslint-disable-next-line
+  lastLocation: PropTypes.object, 
   isLoading: PropTypes.bool.isRequired,
   loadHasFailed: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default withRouter(PostCardList);
+export default withLastLocation(PostCardList);
