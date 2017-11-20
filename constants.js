@@ -12,6 +12,7 @@ const entryVendor = (neutrino) => neutrino.config
     .add('react-redux')
     .add('react-router')
     .add('react-router-dom')
+    .add('react-router-last-location')
     .add('redux')
     .add('redux-thunk')
     .add('styled-jsx/style');

@@ -20,14 +20,15 @@ import {
 
 /**
  * Add a new post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {Object} params All the info needed to add the new post.
  * @param {string} params.author The post's author.
  * @param {string} params.body The post's body.
  * @param {string} params.category The post's category.
  * @param {string} params.title The post's title.
  */
-const addPost = (hostname, params) => (dispatch) => {
+const addPost = params => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/posts`;
   const id = uuidv4();
   const init = {
@@ -54,10 +55,11 @@ const addPost = (hostname, params) => (dispatch) => {
 
 /**
  * Delete a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {string} id `id` of the post to be deleted.
  */
-const deletePost = (hostname, id) => (dispatch) => {
+const deletePost = id => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}`;
   const init = { method: 'DELETE' };
   dispatch(postDeleting({ isDeleting: true }));
@@ -75,13 +77,14 @@ const deletePost = (hostname, id) => (dispatch) => {
 
 /**
  * Edit a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {string} id id of the post to be edited.
  * @param {Object} params - All the info to be changed in the post.
  * @param {string} [params.body] - The post's body (optional).
  * @param {string} [params.title] - The post's title (optional).
  */
-const editPost = (hostname, id, params) => (dispatch) => {
+const editPost = (id, params) => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}`;
   const init = {
     method: 'PUT',
@@ -104,9 +107,10 @@ const editPost = (hostname, id, params) => (dispatch) => {
 
 /**
  * Recover all the posts from the server.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  */
-const fetchPosts = hostname => (dispatch) => {
+const fetchPosts = () => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/posts`;
   dispatch(postsAreLoading({ isLoading: true }));
 

@@ -34,7 +34,7 @@ const getSortedPosts = (posts, {
  */
 const getVisiblePosts = posts => posts.filter(post => !post.deleted);
 
-export default {
+export {
   getPostsByCategory,
   getSortedPosts,
   getVisiblePosts,

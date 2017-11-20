@@ -20,13 +20,13 @@ import {
 
 /**
  * Add a comment to a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {Object} params - All the info needed to add the comment to the post.
  * @param {string} params.author - The comment's author.
  * @param {string} params.body - The comment's body.
  * @param {string} params.parentId - The parent post's unique ID.
  */
-const addComment = (hostname, params) => (dispatch) => {
+const addComment = params => (dispatch) => {
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/comments`;
   const id = uuidv4();
   const init = {
@@ -53,10 +53,11 @@ const addComment = (hostname, params) => (dispatch) => {
 
 /**
  * Delete a comment.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {string} id `id` of the comment to be deleted.
  */
-const deleteComment = (hostname, id) => (dispatch) => {
+const deleteComment = id => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/comments/${id}`;
   const init = { method: 'DELETE' };
   dispatch(commentDeleting({ isDeleting: true }));
@@ -74,11 +75,12 @@ const deleteComment = (hostname, id) => (dispatch) => {
 
 /**
  * Edit a comment from a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {string} id id of the comment to be edited.
  * @param {string} body The new content for the comment.
  */
-const editComment = (hostname, id, body) => (dispatch) => {
+const editComment = (id, body) => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/comments/${id}`;
   const init = {
     method: 'PUT',
@@ -102,10 +104,11 @@ const editComment = (hostname, id, body) => (dispatch) => {
 
 /**
  * Recover all the comments from a post.
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
  * @param {string} id id of the post whose comments will be recovered.
  */
-const fetchComments = (hostname, id) => (dispatch) => {
+const fetchComments = id => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}/comments`;
   dispatch(commentsAreLoading({ isLoading: true }));
 

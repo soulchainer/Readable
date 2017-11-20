@@ -5,11 +5,9 @@ import {
 } from './actions';
 import { createRequestInit } from '../../utils';
 
-/**
- *
- * @param {string} hostname Hostname of the app, `window.location.hostname`.
- */
-const fetchCategories = hostname => (dispatch) => {
+const fetchCategories = () => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
   const url = `//${hostname}:3001/categories`;
   dispatch(categoriesAreLoading({ isLoading: true }));
 
