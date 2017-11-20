@@ -1,5 +1,5 @@
 import {
-  /* CategoryScreen, */
+  CategoryScreen,
   HomeScreen,
   /* PostEditor,
   PostScreen, */
@@ -23,10 +23,11 @@ const routes = [
     component: PostScreen,
     path: '/:category/:post_id',
   },
+  */
   {
     component: CategoryScreen,
     path: '/:category',
-  }, */
+  },
 ];
 
 export default routes;

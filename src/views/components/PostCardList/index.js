@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withLastLocation } from 'react-router-last-location';
-import { withRouter } from 'react-router';
 import { PostCard } from 'views/components';
 
 class PostCardList extends Component {
@@ -49,4 +47,4 @@ PostCardList.defaultProps = {
   lastLocation: null,
 };
 
-export default withLastLocation(withRouter(PostCardList));
+export default PostCardList;

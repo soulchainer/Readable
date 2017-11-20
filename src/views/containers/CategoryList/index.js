@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import { withLastLocation } from 'react-router-last-location';
+import { withRouter } from 'react-router';
 import { categoriesOperations } from 'state/ducks/categories';
 import { CategoryList } from 'views/components';
 
@@ -12,4 +14,6 @@ const mapDispatchToProps = dispatch => (
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+const categoryList = connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+
+export default withLastLocation(withRouter(categoryList));

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withLastLocation } from 'react-router-last-location';
-import { withRouter } from 'react-router';
 import { Category } from 'views/components';
 
 class CategoryList extends Component {
@@ -52,4 +50,4 @@ CategoryList.defaultProps = {
   lastLocation: null,
 };
 
-export default withLastLocation(withRouter(CategoryList));
+export default CategoryList;
