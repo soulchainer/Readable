@@ -12,7 +12,7 @@ const App = () => (
     <LastLocationProvider>
       <div className="Root">
         <Switch>
-          {routes.map(({ path, ...args }) => <Route key={path} {...args} />)}
+          {routes.map(args => <Route key={args.path} {...args} />)}
         </Switch>
         {/*
           * TODO: add global styles later
