@@ -1,13 +1,19 @@
+import debounce from 'lodash.debounce';
+import { constants, createRequestInit } from 'state/utils';
 import {
   categoriesFetchError,
   categoriesAreLoading,
   categoriesFetched,
 } from './actions';
-import { createRequestInit } from '../../utils';
 
-const fetchCategories = () => (dispatch) => {
+/**
+ * Recover all categories from the server.
+ */
+/* eslint-disable no-underscore-dangle */
+const _fetchCategories = () => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
+  console.log(Date()); // eslint-disable-line
   const url = `//${hostname}:3001/categories`;
   dispatch(categoriesAreLoading({ isLoading: true }));
 
@@ -29,6 +35,10 @@ const fetchCategories = () => (dispatch) => {
     })
     .catch(() => dispatch(categoriesFetchError({ loadHasFailed: true })));
 };
+
+const { CALL_DELAY, DEBOUNCE_OPTS } = constants;
+
+const fetchCategories = debounce(_fetchCategories, CALL_DELAY, DEBOUNCE_OPTS);
 
 export {
   fetchCategories,

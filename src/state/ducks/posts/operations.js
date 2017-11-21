@@ -1,4 +1,10 @@
+import debounce from 'lodash.debounce';
 import uuidv4 from 'uuid/v4';
+import {
+  constants,
+  createRequestInit,
+  getTimestamp,
+} from 'state/utils';
 import {
   postAddError,
   postAdded,
@@ -13,10 +19,6 @@ import {
   postsAreLoading,
   postsFetched,
 } from './actions';
-import {
-  createRequestInit,
-  getTimestamp,
-} from '../../utils';
 
 /**
  * Add a new post.
@@ -108,7 +110,8 @@ const editPost = (id, params) => (dispatch) => {
 /**
  * Recover all the posts from the server.
  */
-const fetchPosts = () => (dispatch) => {
+/* eslint-disable no-underscore-dangle */
+const _fetchPosts = () => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
   const url = `//${hostname}:3001/posts`;
@@ -124,6 +127,10 @@ const fetchPosts = () => (dispatch) => {
     .then(posts => dispatch(postsFetched({ posts })))
     .catch(() => dispatch(postsFetchError({ loadHasFailed: true })));
 };
+
+const { CALL_DELAY, DEBOUNCE_OPTS } = constants;
+
+const fetchPosts = debounce(_fetchPosts, CALL_DELAY, DEBOUNCE_OPTS);
 
 export {
   addPost,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import App from 'views/components/App';
+import { App } from 'views/containers';
 
 class Root extends Component {
   state = { devtools: null };
