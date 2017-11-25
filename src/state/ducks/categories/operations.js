@@ -1,5 +1,4 @@
-import debounce from 'lodash.debounce';
-import { constants, createRequestInit } from 'state/utils';
+import { createRequestInit } from 'state/utils';
 import {
   categoriesFetchError,
   categoriesAreLoading,
@@ -9,8 +8,7 @@ import {
 /**
  * Recover all categories from the server.
  */
-/* eslint-disable no-underscore-dangle */
-const _fetchCategories = () => (dispatch) => {
+const fetchCategories = () => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
   console.log(Date()); // eslint-disable-line
@@ -35,10 +33,6 @@ const _fetchCategories = () => (dispatch) => {
     })
     .catch(() => dispatch(categoriesFetchError({ loadHasFailed: true })));
 };
-
-const { CALL_DELAY, DEBOUNCE_OPTS } = constants;
-
-const fetchCategories = debounce(_fetchCategories, CALL_DELAY, DEBOUNCE_OPTS);
 
 export {
   fetchCategories,

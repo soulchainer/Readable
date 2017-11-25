@@ -1,30 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Category } from 'views/components';
 
-const CategoryList = (
-  { categories: { categories, isLoading, loadHasFailed } }
-) => {
-  const categoryList = Object.keys(categories).map(category => (
-    <li key={category}>
-      <Category
-        name={category}
-        path={categories[category]}
-      />
-    </li>
-  ));
-  return (
-    <ul className="CategoryList">
-      {categoryList}
-    </ul>
-  );
+class CategoryList extends Component {
+  componentDidMount() {
+    const { fetchCategories } = this.props;
+    fetchCategories();
+  }
+
+  render() {
+    const { categories, isLoading, loadHasFailed } = this.props;
+    const categoryList = Object.keys(categories).map(category => (
+      <li key={category}>
+        <Category
+          name={category}
+          path={categories[category]}
+        />
+      </li>
+    ));
+    return (
+      <ul className="CategoryList">
+        {isLoading}
+        {loadHasFailed}
+        {categoryList}
+      </ul>
+    );
+  }
+}
+
+CategoryList.defaultProps = {
+  categories: {},
+  isLoading: false,
+  loadHasFailed: false,
 };
 
 /* eslint-disable react/forbid-prop-types */
 CategoryList.propTypes = {
-  categories: PropTypes.objectOf(PropTypes.string).isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  loadHasFailed: PropTypes.bool.isRequired,
+  categories: PropTypes.objectOf(PropTypes.string),
+  fetchCategories: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  loadHasFailed: PropTypes.bool,
 };
 /* eslint-enable react/forbid-prop-types */
 

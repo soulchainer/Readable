@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
-import { withLastLocation } from 'react-router-last-location';
 import { withRouter } from 'react-router';
 import { postsOperations, postsSelectors } from 'state/ducks/posts';
-import { PostCardList } from 'views/components';
+import PostCardList from 'views/components/PostCardList';
 
 const mapStateToProps = ({
   posts: {
@@ -14,12 +13,10 @@ const mapStateToProps = ({
   loadHasFailed,
 });
 
-const mapDispatchToProps = dispatch => (
-  {
-    fetchPosts: () => dispatch(postsOperations.fetchPosts()),
-  }
-);
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: category => dispatch(postsOperations.fetchPosts(category)),
+});
 
 const postCardList = connect(mapStateToProps, mapDispatchToProps)(PostCardList);
 
-export default withLastLocation(withRouter(postCardList));
+export default withRouter(postCardList);

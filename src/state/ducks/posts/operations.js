@@ -1,7 +1,5 @@
-import debounce from 'lodash.debounce';
 import uuidv4 from 'uuid/v4';
 import {
-  constants,
   createRequestInit,
   getTimestamp,
 } from 'state/utils';
@@ -109,12 +107,13 @@ const editPost = (id, params) => (dispatch) => {
 
 /**
  * Recover all the posts from the server.
+ * * @param {string} [category] If given, only recover posts from this category.
  */
-/* eslint-disable no-underscore-dangle */
-const _fetchPosts = () => (dispatch) => {
+const fetchPosts = category => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
-  const url = `//${hostname}:3001/posts`;
+  const categoryPathChunk = category ? `${category}/` : '';
+  const url = `//${hostname}:3001/${categoryPathChunk}posts`;
   dispatch(postsAreLoading({ isLoading: true }));
 
   fetch(url, createRequestInit())
@@ -127,10 +126,6 @@ const _fetchPosts = () => (dispatch) => {
     .then(posts => dispatch(postsFetched({ posts })))
     .catch(() => dispatch(postsFetchError({ loadHasFailed: true })));
 };
-
-const { CALL_DELAY, DEBOUNCE_OPTS } = constants;
-
-const fetchPosts = debounce(_fetchPosts, CALL_DELAY, DEBOUNCE_OPTS);
 
 export {
   addPost,

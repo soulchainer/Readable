@@ -1,45 +1,32 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { categoriesOperations } from 'state/ducks/categories';
-import { postsOperations } from 'state/ducks/posts';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   /* AddPostButton, */
   CategoryList,
   PostCardList,
-} from 'views/components';
+} from 'views/containers';
 // import styles from './styles';
 
-const mapStateToProps = ({ categories, posts }) => ({ categories, posts });
-
-const mapDispatchToProps = dispatch => (
-  {
-    fetchCategories: () => dispatch(categoriesOperations.fetchCategories()),
-    fetchPosts: () => dispatch(postsOperations.fetchPosts()),
-    // TENGO QUE HACER DE NUEVO LA FUNCIÓN DE OBTENER POR
-    // CATEGORÍA Y BORRAR EL SELECTOR
-    // Y HACERLA DEBOUNCE
-  }
-);
-
-class CategoryScreen extends Component {
-  componentDidMount() {
-    const {
-      fetchCategories,
-      fetchPosts
-    } = this.props;
-    fetchCategories();
-    fetchPosts();
-  }
-
-  render() (
+const CategoryScreen = ({ match }) => {
+  const { category } = match.params;
+  return (
     <div className="CategoryScreen">
-      <CategoryList categories={categories} />
-      <PostCardList posts={posts} />
+      <CategoryList />
+      <PostCardList category={category} />
       {/* <AddPostButton /> */}
       {/* <style jsx>{}</style> */}
     </div>
-  )
-);
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryScreen);
+CategoryScreen.propTypes = {
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    // eslint-disable-next-line react/forbid-prop-types
+    params: PropTypes.object,
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
+};
 
+export default CategoryScreen;

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
 const PostCard = ({
   author,
   body,
@@ -22,8 +24,10 @@ const PostCard = ({
       title: ${title}
       voteScore: ${voteScore}
     `}
+    <Link to={`/${category}/${id}`}>Read More...</Link>
   </div>
 );
+/* eslint-enable jsx-a11y/anchor-is-valid */
 
 PostCard.propTypes = {
   author: PropTypes.string.isRequired,

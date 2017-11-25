@@ -4,21 +4,17 @@ import { PostCard } from 'views/components';
 
 class PostCardList extends Component {
   componentDidMount() {
-    const {
-      fetchPosts,
-      lastLocation: lastPath,
-      location: { pathname: currentPath },
-    } = this.props;
-    const shouldFetchPosts = !lastPath || currentPath === '/';
-    if (shouldFetchPosts) fetchPosts();
+    const { category, fetchPosts } = this.props;
+    fetchPosts(category);
+  }
+
+  componentWillReceiveProps({ category }) {
+    const { category: lastCategory, fetchPosts } = this.props;
+    if (category !== lastCategory) fetchPosts(category);
   }
 
   render() {
-    const {
-      isLoading, // eslint-disable-line
-      loadHasFailed, // eslint-disable-line
-      posts,
-    } = this.props;
+    const { isLoading, loadHasFailed, posts } = this.props;
     const postCardList = posts.map(post => (
       <li key={post.id}>
         <PostCard {...post} />
@@ -26,25 +22,28 @@ class PostCardList extends Component {
     ));
     return (
       <ul className="PostCardList">
+        {isLoading}
+        {loadHasFailed}
         {postCardList}
       </ul>
     );
   }
 }
 
-/* eslint-disable react/forbid-prop-types */
-PostCardList.propTypes = {
-  fetchPosts: PropTypes.func.isRequired,
-  lastLocation: PropTypes.object,
-  location: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  loadHasFailed: PropTypes.bool.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-/* eslint-enable react/forbid-prop-types */
-
 PostCardList.defaultProps = {
-  lastLocation: null,
+  category: '',
+  isLoading: false,
+  loadHasFailed: false,
+  posts: [],
+};
+
+PostCardList.propTypes = {
+  category: PropTypes.string,
+  fetchPosts: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  loadHasFailed: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  posts: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default PostCardList;
