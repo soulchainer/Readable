@@ -7,14 +7,17 @@ import {
   postAddError,
   postAdded,
   postAdding,
-  postDeleteError,
-  postDeleting,
-  postDeleted,
-  postEditError,
-  postEditing,
-  postEdited,
-  postsFetchError,
   postsAreLoading,
+  postDeleteError,
+  postDeleted,
+  postDeleting,
+  postEditError,
+  postEdited,
+  postEditing,
+  postDetailsAreLoading,
+  postDetailsFetchError,
+  postDetailsFetched,
+  postsFetchError,
   postsFetched,
 } from './actions';
 
@@ -106,6 +109,27 @@ const editPost = (id, params) => (dispatch) => {
 };
 
 /**
+ * Recover the details of a single post from the server.
+ * * @param {string} id `id` of the post which details will be recovered.
+ */
+const fetchPostDetails = id => (dispatch) => {
+  /** Hostname of the app */
+  const { hostname } = window.location;
+  const url = `//${hostname}:3001/posts/${id}`;
+  dispatch(postDetailsAreLoading({ isLoadingDetails: true }));
+
+  fetch(url, createRequestInit())
+    .then((response) => {
+      if (!response.ok) throw Error(response.statusText);
+      dispatch(postDetailsAreLoading({ isLoadingDetails: false }));
+      return response;
+    })
+    .then(response => response.json())
+    .then(postDetails => dispatch(postDetailsFetched({ postDetails })))
+    .catch(() => dispatch(postDetailsFetchError({ loadDetailsHasFailed: true })));
+};
+
+/**
  * Recover all the posts from the server.
  * * @param {string} [category] If given, only recover posts from this category.
  */
@@ -131,5 +155,6 @@ export {
   addPost,
   deletePost,
   editPost,
+  fetchPostDetails,
   fetchPosts,
 };

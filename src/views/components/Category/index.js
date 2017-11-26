@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const Category = ({ path, name }) => (
-  <NavLink to={path}>{name}</NavLink>
+  <NavLink to={`/${path}`}>{name}</NavLink>
 );
 
 Category.propTypes = {

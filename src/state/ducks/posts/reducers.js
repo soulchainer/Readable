@@ -1,5 +1,5 @@
+import { createReducer } from 'state/utils';
 import * as types from './types';
-import { createReducer } from '../../utils';
 
 const initialState = {
   posts: [], // all posts list
@@ -7,11 +7,13 @@ const initialState = {
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
+  loadDetailsHasFailed: false,
   loadHasFailed: false,
   isAdding: false,
   isDeleting: false,
   isEditing: false,
   isLoading: false,
+  isLoadingDetails: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
 };
@@ -52,6 +54,14 @@ const postsReducer = createReducer(initialState)({
     ...state,
     deleteHasFailed: payload.deleteHasFailed,
   }),
+  [types.DETAILS_FETCHED]: (state, { payload }) => ({
+    ...state,
+    postDetails: payload.postDetails,
+  }),
+  [types.DETAILS_LOADING]: (state, { payload }) => ({
+    ...state,
+    isLoadingDetails: payload.isLoadingDetails,
+  }),
   [types.EDITED]: (state, { payload }) => ({
     ...state,
     posts: state.posts.map((post) => {
@@ -70,6 +80,10 @@ const postsReducer = createReducer(initialState)({
   [types.FETCHED]: (state, { payload }) => ({
     ...state,
     posts: payload.posts,
+  }),
+  [types.FETCH_DETAILS_ERROR]: (state, { payload }) => ({
+    ...state,
+    loadDetailsHasFailed: payload.loadDetailsHasFailed,
   }),
   [types.FETCH_ERROR]: (state, { payload }) => ({
     ...state,

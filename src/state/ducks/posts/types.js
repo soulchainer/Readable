@@ -27,6 +27,14 @@ export const DELETING = 'posts/DELETING';
  */
 export const DELETE_ERROR = 'posts/DELETE_ERROR';
 /**
+ * Dispatched after a post details were succesfully fetched from the server
+ */
+export const DETAILS_FETCHED = 'posts/DETAILS_FETCHED';
+/**
+ * Dispatched when an API call to fetch a post details is sent
+ */
+export const DETAILS_LOADING = 'posts/DETAILS_LOADING';
+/**
  * Dispatched after post were succesfully edited on the server
  */
 export const EDITED = 'posts/EDITED';
@@ -42,6 +50,10 @@ export const EDIT_ERROR = 'posts/EDIT_ERROR';
  * Dispatched after posts were succesfully fetched from the server
  */
 export const FETCHED = 'posts/FETCHED';
+/**
+ * Dispatched when an API call to fetch a post details fails
+ */
+export const FETCH_DETAILS_ERROR = 'posts/FETCH_DETAILS_ERROR';
 /**
  * Dispatched when an API call to fetch all posts fails
  */
