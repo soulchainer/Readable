@@ -1,7 +1,7 @@
 import {
   CategoryScreen,
   HomeScreen,
-  /* PostEditor, */
+  PostEditorScreen,
   PostScreen,
 } from 'views/screens';
 
@@ -11,15 +11,14 @@ const routes = [
     exact: true,
     path: '/',
   },
-  /* {
-    component: PostEditor,
+  {
+    component: PostEditorScreen,
     path: '/#new',
   },
   {
-    component: PostEditor,
-    path: '/:category/:post_id#edit',
+    component: PostEditorScreen,
+    path: '/:category/:postId#edit',
   },
-  */
   {
     component: PostScreen,
     path: '/:category/:postId',
