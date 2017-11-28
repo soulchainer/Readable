@@ -13,6 +13,7 @@ const routes = [
   },
   {
     component: PostEditorScreen,
+    exact: true,
     path: '/#new',
   },
   {

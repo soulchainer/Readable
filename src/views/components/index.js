@@ -1,3 +1,4 @@
+export { default as AddPostButton } from './AddPostButton';
 export { default as App } from './App';
 export { default as Category } from './Category';
 export { default as CategoryList } from './CategoryList';

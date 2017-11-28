@@ -1,6 +1,6 @@
 import React from 'react';
+import { AddPostButton } from 'views/components';
 import {
-  /* AddPostButton, */
   CategoryList,
   PostCardList,
 } from 'views/containers';
@@ -10,7 +10,7 @@ const HomeScreen = () => (
   <div className="HomeScreen">
     <CategoryList />
     <PostCardList />
-    {/* <AddPostButton /> */}
+    <AddPostButton />
     {/* <style jsx>{}</style> */}
   </div>
 );
