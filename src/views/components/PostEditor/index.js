@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 class PostEditor extends Component {
   componentDidMount() {
-    const { location: { state: postInfo } } = this.props;
+    const { postInfo } = this.props;
     console.log(postInfo); // eslint-disable-line
-    console.log(location); // eslint-disable-line
   }
 
   render() {
@@ -15,9 +14,13 @@ class PostEditor extends Component {
   }
 }
 
+PostEditor.defaultProps = {
+  postInfo: {},
+};
+
 PostEditor.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  location: PropTypes.object.isRequired,
+  postInfo: PropTypes.object,
 };
 
 export default PostEditor;

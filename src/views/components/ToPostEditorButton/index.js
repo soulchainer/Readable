@@ -27,14 +27,28 @@ const actions = {
 };
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
-const ToPostEditorButton = ({ action }) => {
+const ToPostEditorButton = ({ action, postInfo }) => {
   const { altText, to } = actions[action];
+  if (Object.keys(postInfo)) {
+    to.state.postInfo = postInfo;
+  }
   return <Link to={to} alt={altText}>{altText}</Link>;
 };
 /* eslint-enable jsx-a11y/anchor-is-valid */
 
+ToPostEditorButton.defaultProps = {
+  postInfo: {},
+};
+
 ToPostEditorButton.propTypes = {
-  action: PropTypes.string.isRequired,
+  /**
+   * Name of the action to be done.
+   */
+  action: PropTypes.oneOf(['add', 'edit']).isRequired,
+  /**
+   * Info of the post being edited, to prefill the `form` fields.
+   */
+  postInfo: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 export default ToPostEditorButton;
