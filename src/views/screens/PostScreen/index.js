@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ToPostEditorButton } from 'views/components';
 import {
-  /* AddPostButton, */
   CategoryList,
   Post,
 } from 'views/containers';
@@ -13,7 +13,11 @@ const PostScreen = ({ match }) => {
     <div className="PostScreen">
       <CategoryList />
       <Post id={postId} />
-      {/* <AddPostButton /> */}
+      <ToPostEditorButton
+        action="edit"
+        {/* TODO: do here the API call to get post info, not into <Post>  */}
+        postInfo={}
+      />
       {/* <style jsx>{}</style> */}
     </div>
   );
