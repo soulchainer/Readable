@@ -14,7 +14,11 @@ const routes = [
   {
     component: PostEditorScreen,
     exact: true,
-    path: '/#new',
+    path: '/#add',
+  },
+  {
+    component: PostEditorScreen,
+    path: '/:category#add',
   },
   {
     component: PostEditorScreen,

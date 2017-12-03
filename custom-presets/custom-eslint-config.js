@@ -12,6 +12,12 @@ module.exports = neutrino => {
         'import/extensions': 'off',
         // Don't mark as unresolved without extensions
         'import/no-unresolved': 'off',
+        'jsx-a11y/label-has-for': ['error', {
+          "components": ['label'],
+          "required": {
+            "some": [ "nesting", "id" ]
+          },
+        }]
       }),
       settings: {'import/core-modules': ['styled-jsx/css'] }
     }));

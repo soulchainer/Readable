@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const actions = {
   add: {
     to: {
-      pathname: '/#new',
       state: {
         action: 'add',
       },
@@ -16,7 +15,6 @@ const actions = {
   },
   edit: {
     to: {
-      pathname: './#edit',
       state: {
         action: 'edit',
       },
@@ -27,16 +25,22 @@ const actions = {
 };
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
-const ToPostEditorButton = ({ action, postInfo }) => {
+const ToPostEditorButton = ({
+  action,
+  category,
+  location,
+  postInfo,
+}) => {
   const { altText, to } = actions[action];
-  if (Object.keys(postInfo)) {
-    to.state.postInfo = postInfo;
-  }
+  if (Object.keys(postInfo)) to.state.postInfo = postInfo;
+  if (category) to.state.category = category;
+  to.pathname = `${location.pathname}#${action}`;
   return <Link to={to} alt={altText}>{altText}</Link>;
 };
 /* eslint-enable jsx-a11y/anchor-is-valid */
 
 ToPostEditorButton.defaultProps = {
+  category: '',
   postInfo: {},
 };
 
@@ -46,9 +50,15 @@ ToPostEditorButton.propTypes = {
    */
   action: PropTypes.oneOf(['add', 'edit']).isRequired,
   /**
+   * If the button is placed into a `CategoryScreen`, this will have the name
+   * of the current category.
+   */
+  category: PropTypes.string,
+  location: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  /**
    * Info of the post being edited, to prefill the `form` fields.
    */
   postInfo: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
-export default ToPostEditorButton;
+export default withRouter(ToPostEditorButton);

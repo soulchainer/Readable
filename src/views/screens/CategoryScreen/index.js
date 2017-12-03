@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ToPostEditorButton } from 'views/components';
 import {
-  /* AddPostButton, */
   CategoryList,
   PostCardList,
 } from 'views/containers';
@@ -13,7 +13,10 @@ const CategoryScreen = ({ match }) => {
     <div className="CategoryScreen">
       <CategoryList />
       <PostCardList category={category} />
-      {/* <AddPostButton /> */}
+      <ToPostEditorButton
+        action="add"
+        category={category}
+      />
       {/* <style jsx>{}</style> */}
     </div>
   );

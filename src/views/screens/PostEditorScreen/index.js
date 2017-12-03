@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, withRouter } from 'react-router';
 import {
-  /* AddPostButton, */
   CategoryList,
   PostEditor,
 } from 'views/containers';
@@ -18,7 +17,6 @@ const PostEditorScreen = ({ location: { state } }) => {
         <div className="PostScreen">
           <CategoryList />
           <PostEditor postInfo={postInfo} />
-          {/* <AddPostButton /> */}
           {/* <style jsx>{}</style> */}
         </div>
       );

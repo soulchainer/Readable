@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Post extends Component {
-  componentDidMount() {
-    const { fetchPostDetails, id } = this.props;
-    fetchPostDetails(id);
-  }
-
   render() {
-    console.log(this.props); // eslint-disable-line
     const {
       isLoadingDetails,
       loadDetailsHasFailed,
@@ -74,8 +68,6 @@ Post.defaultProps = {
 };
 
 Post.propTypes = {
-  fetchPostDetails: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   isLoadingDetails: PropTypes.bool,
   loadDetailsHasFailed: PropTypes.bool,
   postDetails: PropTypes.shape({

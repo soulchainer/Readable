@@ -11,7 +11,6 @@ import {
 const fetchCategories = () => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
-  console.log(Date()); // eslint-disable-line
   const url = `//${hostname}:3001/categories`;
   dispatch(categoriesAreLoading({ isLoading: true }));
 

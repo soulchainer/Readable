@@ -1,29 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ToPostEditorButton } from 'views/components';
-import {
-  CategoryList,
-  Post,
-} from 'views/containers';
+import { connect } from 'react-redux';
+import { postsOperations } from 'state/ducks/posts';
+import { Post, ToPostEditorButton } from 'views/components';
+import { CategoryList } from 'views/containers';
 // import styles from './styles';
 
-const PostScreen = ({ match }) => {
-  const { postId } = match.params;
-  return (
-    <div className="PostScreen">
-      <CategoryList />
-      <Post id={postId} />
-      <ToPostEditorButton
-        action="edit"
-        {/* TODO: do here the API call to get post info, not into <Post>  */}
-        postInfo={}
-      />
-      {/* <style jsx>{}</style> */}
-    </div>
-  );
+const mapStateToProps = ({
+  posts: {
+    postDetails, isLoadingDetails, loadDetailsHasFailed,
+  },
+}) => ({
+  postInfo: {
+    postDetails,
+    isLoadingDetails,
+    loadDetailsHasFailed,
+  },
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchPostDetails: id => dispatch(postsOperations.fetchPostDetails(id)),
+});
+
+class PostScreen extends Component {
+  componentDidMount() {
+    const { fetchPostDetails, match } = this.props;
+    const { postId } = match.params;
+    fetchPostDetails(postId);
+  }
+
+  render() {
+    const { postInfo } = this.props;
+    const {
+      isLoadingDetails,
+      loadDetailsHasFailed,
+      postDetails,
+    } = postInfo;
+
+    let toPostEditorButton;
+
+    if (!isLoadingDetails && !loadDetailsHasFailed && postDetails) {
+      toPostEditorButton = (
+        <ToPostEditorButton
+          action="edit"
+          postInfo={postDetails}
+        />
+      );
+    }
+
+    return (
+      <div className="PostScreen">
+        <CategoryList />
+        <Post {...postInfo} />
+        {toPostEditorButton}
+        {/* <style jsx>{}</style> */}
+      </div>
+    );
+  }
+}
+
+PostScreen.defaultProps = {
+  postInfo: {},
 };
 
 PostScreen.propTypes = {
+  fetchPostDetails: PropTypes.func.isRequired,
   match: PropTypes.shape({
     isExact: PropTypes.bool,
     // eslint-disable-next-line react/forbid-prop-types
@@ -31,6 +72,21 @@ PostScreen.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }).isRequired,
+  postInfo: PropTypes.shape({
+    isLoadingDetails: PropTypes.bool,
+    loadDetailsHasFailed: PropTypes.bool,
+    postDetails: PropTypes.shape({
+      author: PropTypes.string,
+      body: PropTypes.string,
+      category: PropTypes.string,
+      commentCount: PropTypes.number,
+      deleted: PropTypes.bool,
+      id: PropTypes.string,
+      timestamp: PropTypes.number,
+      title: PropTypes.string,
+      voteScore: PropTypes.number,
+    }),
+  }),
 };
 
-export default PostScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
