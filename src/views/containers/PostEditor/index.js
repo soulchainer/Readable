@@ -4,6 +4,7 @@ import { postsOperations } from 'state/ducks/posts';
 import PostEditor from 'views/components/PostEditor';
 
 const mapStateToProps = ({
+  categories: { categories },
   posts: {
     addHasFailed,
     editHasFailed,
@@ -11,7 +12,11 @@ const mapStateToProps = ({
     isEditing,
   },
 }) => ({
-  addHasFailed, editHasFailed, isAdding, isEditing,
+  addHasFailed,
+  categories: Object.keys(categories),
+  editHasFailed,
+  isAdding,
+  isEditing,
 });
 
 const mapDispatchToProps = dispatch => ({

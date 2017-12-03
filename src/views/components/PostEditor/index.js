@@ -59,13 +59,17 @@ class PostEditor extends Component {
   }
 
   render() {
-    const { location: { state: { action, category } } } = this.props;
+    const {
+      categories,
+      location: { state: { action } },
+      match: { params: { category } },
+    } = this.props;
     const disabled = {};
 
     const isEdit = action === 'edit';
-    if (isEdit) disabled.author = true;
-    if (isEdit || category) disabled.category = true;
-    if (category && !this.state.category) this.setState({ category });
+    disabled.author = isEdit;
+    disabled.category = (isEdit || category);
+    if (category && this.state.category !== category) this.setState({ category });
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -86,9 +90,16 @@ class PostEditor extends Component {
           name="category"
           value={this.state.category}
         >
-          <option value={this.state.category}>{this.state.category}</option>
-          <option value="category2">Category 2</option>
-          <option value="Category3">Category 3</option>
+          {
+            categories.map(categoryOption => (
+              <option
+                key={categoryOption}
+                value={categoryOption}
+              >
+                {categoryOption}
+              </option>
+            ))
+          }
         </select>
         <label htmlFor="title">Title</label>
         <input
@@ -127,8 +138,10 @@ PostEditor.defaultProps = {
 /* eslint-disable react/forbid-prop-types */
 PostEditor.propTypes = {
   addPost: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   editPost: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   postInfo: PropTypes.object,
 };
 /* eslint-enable react/forbid-prop-types */
