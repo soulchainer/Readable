@@ -5,6 +5,19 @@ class PostEditor extends Component {
   constructor(props) {
     super(props);
     /**
+     * Disable the proper inputs depending of the current action of the user
+     * (adding or editing a post).
+     */
+    const {
+      location: { state: { action } },
+      match: { params: { category: categoryPage } },
+    } = this.props;
+    const isEdit = action === 'edit';
+    const disabledInputs = {
+      author: isEdit,
+      category: (isEdit || categoryPage),
+    };
+    /**
      * This default values shouldn't be necessary, but doesn't matter what I do,
      * it won't get the `defaultProps`. TODO: Investigate later.
      */
@@ -18,7 +31,8 @@ class PostEditor extends Component {
     this.state = {
       author,
       body,
-      category,
+      category: categoryPage || category,
+      disabledInputs,
       isFormDisabled: false,
       title,
     };
@@ -76,18 +90,11 @@ class PostEditor extends Component {
   }
 
   render() {
+    const { categories } = this.props;
     const {
-      categories,
-      location: { state: { action } },
-      match: { params: { category } },
-    } = this.props;
-    const disabled = {};
-
-    const { isFormDisabled } = this.state;
-    const isEdit = action === 'edit';
-    disabled.author = isEdit;
-    disabled.category = (isEdit || category);
-    if (category && this.state.category !== category) this.setState({ category });
+      disabledInputs: disabled,
+      isFormDisabled,
+    } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
