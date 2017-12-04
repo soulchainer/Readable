@@ -33,24 +33,54 @@ class PostEditor extends Component {
       body,
       category: categoryPage || category,
       disabledInputs,
+      errorMessage: '',
       isFormDisabled: false,
       title,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAdding, isEditing } = this.props;
+    const {
+      addHasFailed,
+      editHasFailed,
+      history,
+      isAdding,
+      isEditing,
+    } = this.props;
     /**
      * TODO: Improve this. Add a loading message, maybe with a spinner,
      * notifying there is an edit/new post addition in progress.
      * Add, after the addition/edit, redirect to the proper screen
      * (home/category/post)
      */
-    if (isAdding !== nextProps.isAdding || isEditing !== nextProps.isEditing) {
-      this.setState(prevState => ({
-        ...prevState,
-        isFormDisabled: !prevState.isFormDisabled,
-      }));
+    const isAddingChanged = isAdding !== nextProps.isAdding;
+    const isEditingChanged = isEditing !== nextProps.isEditing;
+    const addEnd = isAddingChanged && !nextProps.isAdding;
+    const editEnd = isEditingChanged && !nextProps.isEditing;
+    
+    if (isAddingChanged || isEditingChanged) {
+      this.setState(this.toggleFormDisabled);
+    }
+    if (isAddingChanged) {
+      if (addEnd) {
+        if (nextProps.addHasFailed) {
+          /* The post add failed */
+          this.setState({ errorMessage: 'There was an error adding the post' });
+          return;
+        }
+        /* The post add succeded, redirect to the previous page */
+        history.goBack();
+      } 
+    } else if (isEditingChanged) {
+      if (editEnd) {
+        if (nextProps.editHasFailed) {
+          /* The post edit failed */
+          this.setState({ errorMessage: 'There was an error editing the post' });
+          return;
+        }
+        /* The post add succeded, redirect to the previous page */
+        history.goBack();
+      }
     }
   }
 
@@ -88,6 +118,11 @@ class PostEditor extends Component {
         break;
     }
   }
+
+  toggleFormDisabled = prevState => ({
+    ...prevState,
+    isFormDisabled: !prevState.isFormDisabled,
+  });
 
   render() {
     const { categories } = this.props;
