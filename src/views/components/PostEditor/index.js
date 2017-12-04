@@ -41,8 +41,8 @@ class PostEditor extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      addHasFailed,
-      editHasFailed,
+      // addHasFailed,
+      // editHasFailed,
       history,
       isAdding,
       isEditing,
@@ -51,13 +51,15 @@ class PostEditor extends Component {
      * TODO: Improve this. Add a loading message, maybe with a spinner,
      * notifying there is an edit/new post addition in progress.
      * Add, after the addition/edit, redirect to the proper screen
-     * (home/category/post)
+     * (home/category/post).
+     * Test if, for changes, it suffices comparing
+     * `addHasFailed`and `editHasFAiled`.
      */
     const isAddingChanged = isAdding !== nextProps.isAdding;
     const isEditingChanged = isEditing !== nextProps.isEditing;
     const addEnd = isAddingChanged && !nextProps.isAdding;
     const editEnd = isEditingChanged && !nextProps.isEditing;
-    
+
     if (isAddingChanged || isEditingChanged) {
       this.setState(this.toggleFormDisabled);
     }
@@ -70,7 +72,7 @@ class PostEditor extends Component {
         }
         /* The post add succeded, redirect to the previous page */
         history.goBack();
-      } 
+      }
     } else if (isEditingChanged) {
       if (editEnd) {
         if (nextProps.editHasFailed) {
@@ -128,63 +130,67 @@ class PostEditor extends Component {
     const { categories } = this.props;
     const {
       disabledInputs: disabled,
+      errorMessage,
       isFormDisabled,
     } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="author">Author</label>
-        <input
-          onChange={this.handleChange}
-          disabled={disabled.author || isFormDisabled}
-          id="author"
-          name="author"
-          type="text"
-          value={this.state.author}
-        />
-        <label htmlFor="category">Category</label>
-        <select
-          onChange={this.handleChange}
-          disabled={disabled.category || isFormDisabled}
-          id="category"
-          name="category"
-          value={this.state.category}
-        >
-          {
-            categories.map(categoryOption => (
-              <option
-                key={categoryOption}
-                value={categoryOption}
-              >
-                {categoryOption}
-              </option>
-            ))
-          }
-        </select>
-        <label htmlFor="title">Title</label>
-        <input
-          onChange={this.handleChange}
-          disabled={isFormDisabled}
-          id="title"
-          name="title"
-          type="text"
-          value={this.state.title}
-        />
-        <label htmlFor="body">Body</label>
-        <textarea
-          onChange={this.handleChange}
-          disabled={isFormDisabled}
-          id="body"
-          name="body"
-          value={this.state.body}
-        />
-        <input
-          disabled={isFormDisabled}
-          name="submit"
-          type="submit"
-          value="Submit"
-        />
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="author">Author</label>
+          <input
+            onChange={this.handleChange}
+            disabled={disabled.author || isFormDisabled}
+            id="author"
+            name="author"
+            type="text"
+            value={this.state.author}
+          />
+          <label htmlFor="category">Category</label>
+          <select
+            onChange={this.handleChange}
+            disabled={disabled.category || isFormDisabled}
+            id="category"
+            name="category"
+            value={this.state.category}
+          >
+            {
+              categories.map(categoryOption => (
+                <option
+                  key={categoryOption}
+                  value={categoryOption}
+                >
+                  {categoryOption}
+                </option>
+              ))
+            }
+          </select>
+          <label htmlFor="title">Title</label>
+          <input
+            onChange={this.handleChange}
+            disabled={isFormDisabled}
+            id="title"
+            name="title"
+            type="text"
+            value={this.state.title}
+          />
+          <label htmlFor="body">Body</label>
+          <textarea
+            onChange={this.handleChange}
+            disabled={isFormDisabled}
+            id="body"
+            name="body"
+            value={this.state.body}
+          />
+          <input
+            disabled={isFormDisabled}
+            name="submit"
+            type="submit"
+            value="Submit"
+          />
+        </form>
+        <span>{errorMessage}</span>
+      </div>
     );
   }
 }
@@ -200,9 +206,12 @@ PostEditor.defaultProps = {
 
 /* eslint-disable react/forbid-prop-types */
 PostEditor.propTypes = {
+  addHasFailed: PropTypes.bool.isRequired,
   addPost: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editHasFailed: PropTypes.bool.isRequired,
   editPost: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   isAdding: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
