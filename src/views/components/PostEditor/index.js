@@ -41,8 +41,6 @@ class PostEditor extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      // addHasFailed,
-      // editHasFailed,
       history,
       isAdding,
       isEditing,
@@ -50,10 +48,6 @@ class PostEditor extends Component {
     /**
      * TODO: Improve this. Add a loading message, maybe with a spinner,
      * notifying there is an edit/new post addition in progress.
-     * Add, after the addition/edit, redirect to the proper screen
-     * (home/category/post).
-     * Test if, for changes, it suffices comparing
-     * `addHasFailed`and `editHasFAiled`.
      */
     const isAddingChanged = isAdding !== nextProps.isAdding;
     const isEditingChanged = isEditing !== nextProps.isEditing;
