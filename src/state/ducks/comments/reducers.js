@@ -6,11 +6,11 @@ const initialState = {
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
-  loadHasFailed: false,
   isAdding: false,
   isDeleting: false,
   isEditing: false,
   isLoading: false,
+  loadHasFailed: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
 };

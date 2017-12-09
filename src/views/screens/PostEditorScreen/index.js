@@ -10,13 +10,13 @@ import {
 const PostEditorScreen = ({ location: { state } }) => {
   const redirect = <Redirect to="/" />;
   if (state) {
-    const { action, postInfo } = state;
-    const legalAction = ['add', 'edit'].indexOf(action) > -1;
+    const { action, content } = state;
+    const legalAction = ['addPost', 'editPost'].indexOf(action) > -1;
     if (legalAction) {
       return (
         <div className="PostScreen">
           <CategoryList />
-          <PostEditor postInfo={postInfo} />
+          <PostEditor postInfo={content} />
           {/* <style jsx>{}</style> */}
         </div>
       );

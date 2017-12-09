@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { postsOperations } from 'state/ducks/posts';
-import { Post, ToPostEditorButton } from 'views/components';
+import { Comments, Post, ToEditorButton } from 'views/components';
 import { CategoryList } from 'views/containers';
 // import styles from './styles';
 
@@ -37,13 +37,15 @@ class PostScreen extends Component {
       postDetails,
     } = postInfo;
 
-    let toPostEditorButton;
+    let comments;
+    let toEditorButton;
 
     if (!isLoadingDetails && !loadDetailsHasFailed && postDetails) {
-      toPostEditorButton = (
-        <ToPostEditorButton
-          action="edit"
-          postInfo={postDetails}
+      comments = <Comments postId={postDetails.id} />;
+      toEditorButton = (
+        <ToEditorButton
+          action="editPost"
+          content={postDetails}
         />
       );
     }
@@ -52,7 +54,8 @@ class PostScreen extends Component {
       <div className="PostScreen">
         <CategoryList />
         <Post {...postInfo} />
-        {toPostEditorButton}
+        {comments}
+        {toEditorButton}
         {/* <style jsx>{}</style> */}
       </div>
     );

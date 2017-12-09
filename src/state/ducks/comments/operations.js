@@ -78,7 +78,7 @@ const deleteComment = id => (dispatch) => {
  * @param {string} id id of the comment to be edited.
  * @param {string} body The new content for the comment.
  */
-const editComment = (id, body) => (dispatch) => {
+const editComment = (id, { body }) => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
   const url = `//${hostname}:3001/comments/${id}`;

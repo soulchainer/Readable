@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  // CommentEditor,
+  CommentEditor,
   CommentList,
 } from 'views/containers';
 
 const Comments = ({ postId }) => (
-  <div className='Comments'>
-    {/* <CommentEditor /> */}
+  <div className="Comments">
+    <CommentEditor />
     <CommentList postId={postId} />
   </div>
 );
 
+Comments.defaultProps = {
+  postId: '',
+};
+
 Comments.propTypes = {
-  postId: PropTypes.string.isRequired,
+  postId: PropTypes.string,
 };
 
 export default Comments;

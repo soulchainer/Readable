@@ -2,24 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EditionControls } from 'views/components';
 
-const Comment = ({ actions, comment }) => {
-  const {
-    deleteComment,
-    editComment,
-  } = actions;
-
+const Comment = ({
+  comment,
+  deleteComment,
+}) => {
   const {
     id,
-    body
+    body,
   } = comment;
 
+  console.log(`id: ${id} body: ${body}`); // eslint-disable-line
+
   return (
-    <div class="Comment">
+    <div className="Comment">
       <EditionControls
-        onEdit={editComment}
         onDelete={deleteComment}
-        id={id}
-        param={body}
+        content={comment}
+        type="comment"
       />
       {JSON.stringify(comment)}
     </div>
@@ -29,7 +28,6 @@ const Comment = ({ actions, comment }) => {
 export default Comment;
 
 Comment.propTypes = {
-  actions: PropTypes.objectOf(PropTypes.func).isRequired,
   comment: PropTypes.shape({
     author: PropTypes.string,
     body: PropTypes.string,
@@ -40,4 +38,5 @@ Comment.propTypes = {
     timestamp: PropTypes.number,
     voteScore: PropTypes.number,
   }).isRequired,
+  deleteComment: PropTypes.func.isRequired,
 };

@@ -14,15 +14,15 @@ const routes = [
   {
     component: PostEditorScreen,
     exact: true,
-    path: '/#add',
+    path: '/#addPost',
   },
   {
     component: PostEditorScreen,
-    path: '/:category#add',
+    path: '/:category#addPost',
   },
   {
     component: PostEditorScreen,
-    path: '/:category/:postId#edit',
+    path: '/:category/:postId#editPost',
   },
   {
     component: PostScreen,

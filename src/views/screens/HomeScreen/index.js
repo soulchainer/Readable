@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToPostEditorButton } from 'views/components';
+import { ToEditorButton } from 'views/components';
 import {
   CategoryList,
   PostCardList,
@@ -10,7 +10,7 @@ const HomeScreen = () => (
   <div className="HomeScreen">
     <CategoryList />
     <PostCardList />
-    <ToPostEditorButton action="add" />
+    <ToEditorButton action="addPost" />
     {/* <style jsx>{}</style> */}
   </div>
 );

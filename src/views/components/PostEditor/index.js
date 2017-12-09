@@ -12,7 +12,7 @@ class PostEditor extends Component {
       location: { state: { action } },
       match: { params: { category: categoryPage } },
     } = this.props;
-    const isEdit = action === 'edit';
+    const isEdit = action === 'editPost';
     const disabledInputs = {
       author: isEdit,
       category: (isEdit || categoryPage),
@@ -101,7 +101,7 @@ class PostEditor extends Component {
     } = this.state;
 
     switch (action) {
-      case 'add':
+      case 'addPost':
         await addPost({
           author,
           body,
