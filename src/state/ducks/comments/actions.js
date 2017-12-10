@@ -42,9 +42,11 @@ export const commentsFetchError = createAction(types.FETCH_ERROR);
 export const commentsAreLoading = createAction(types.LOADING);
 export const commentsFetched = createAction(types.FETCHED);
 /**
- * Will be dispatched from the `updateScore` thunk, triggered when the user
- * clicks on the buttons to update the `voteScore` of a comment.
- * This make then an API request to update the comment score.
- * params → type ('comment'), id, string 'upVote' or 'downVote'
+ * All of this actions will be dispatched from `updateScore` thunk, which
+ * makes an API request to update a comment score (`voteScore`), triggered when
+ * the user clicks on the voting buttons.
+ * params → `id`, `option` (the `upVote` or `downVote` string)
  */
-export const updateCommentVoteScore = createAction(types.UPDATE_VOTE_SCORE);
+export const updateCommentVoteScoreError = createAction(types.UPDATE_VOTE_SCORE_ERROR);
+export const updatingCommentVoteScore = createAction(types.UPDATING_VOTE_SCORE);
+export const updatedCommentVoteScore = createAction(types.UPDATED_VOTE_SCORE);

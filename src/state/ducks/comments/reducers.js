@@ -10,9 +10,11 @@ const initialState = {
   isDeleting: false,
   isEditing: false,
   isLoading: false,
+  isUpdatingScore: false,
   loadHasFailed: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
+  updateScoreHasFailed: false,
 };
 
 const commentsReducer = createReducer(initialState)({
@@ -78,12 +80,20 @@ const commentsReducer = createReducer(initialState)({
     ...state,
     isLoading: payload.isLoading,
   }),
-  [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
+  [types.UPDATED_VOTE_SCORE]: (state, { payload }) => ({
     ...state,
     comments: state.comments.map((comment) => {
-      if (payload.id !== comment.id) return comment;
+      if (comment.id !== payload.id) return comment;
       return { ...comment, voteScore: payload.voteScore };
     }),
+  }),
+  [types.UPDATING_VOTE_SCORE]: (state, { payload }) => ({
+    ...state,
+    isUpdatingScore: payload.isUpdatingScore,
+  }),
+  [types.UPDATE_VOTE_SCORE_ERROR]: (state, { payload }) => ({
+    ...state,
+    updateScoreHasFailed: payload.updateScoreHasFailed,
   }),
 });
 

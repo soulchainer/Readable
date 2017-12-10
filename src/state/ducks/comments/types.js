@@ -50,4 +50,15 @@ export const FETCH_ERROR = 'comments/FETCH_ERROR';
  * Dispatched when an API call to fetch all comments from a post is sent
  */
 export const LOADING = 'comments/LOADING';
-export const UPDATE_VOTE_SCORE = 'comments/UPDATE_VOTE_SCORE';
+/**
+ * Dispatched after a comment voteScore is succesfully updated on the server
+ */
+export const UPDATED_VOTE_SCORE = 'comments/UPDATED_VOTE_SCORE';
+/**
+ * Dispatched when an API call to update a comment voteScore is sent
+ */
+export const UPDATING_VOTE_SCORE = 'comments/UPDATING_VOTE_SCORE';
+/**
+ * Dispatched when an API call to update a comment voteScore fails
+ */
+export const UPDATE_VOTE_SCORE_ERROR = 'comments/UPDATE_VOTE_SCORE_ERROR';

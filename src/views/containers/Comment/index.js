@@ -2,8 +2,21 @@ import { connect } from 'react-redux';
 import { commentsOperations } from 'state/ducks/comments';
 import Comment from 'views/components/Comment';
 
-const mapDispatchToProps = (dispatch, { comment }) => ({
-  deleteComment: () => dispatch(commentsOperations.deleteComment(comment.id)),
+const mapStateToProps = ({
+  comments: {
+    isUpdatingScore,
+    updateScoreHasFailed,
+  },
+}) => ({
+  voteState: {
+    isUpdatingScore,
+    updateScoreHasFailed,
+  },
 });
 
-export default connect(null, mapDispatchToProps)(Comment);
+const mapDispatchToProps = (dispatch, { comment }) => ({
+  deleteComment: () => dispatch(commentsOperations.deleteComment(comment.id)),
+  updateScore: option => dispatch(commentsOperations.updateScore(comment.id, option)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comment);

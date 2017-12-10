@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EditionControls } from 'views/components';
+import {
+  EditionControls,
+  VoteScore,
+} from 'views/components';
 
 const Comment = ({
   comment,
   deleteComment,
+  updateScore,
+  voteState,
 }) => {
   const {
     id,
     body,
+    voteScore,
   } = comment;
 
   console.log(`id: ${id} body: ${body}`); // eslint-disable-line
@@ -21,6 +27,11 @@ const Comment = ({
         type="comment"
       />
       {JSON.stringify(comment)}
+      <VoteScore
+        updateScore={updateScore}
+        score={voteScore}
+        voteState={voteState}
+      />
     </div>
   );
 };
@@ -39,4 +50,9 @@ Comment.propTypes = {
     voteScore: PropTypes.number,
   }).isRequired,
   deleteComment: PropTypes.func.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  voteState: PropTypes.shape({
+    isUpdatingScore: PropTypes.bool,
+    updateScoreHasFailed: PropTypes.bool,
+  }).isRequired,
 };

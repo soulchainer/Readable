@@ -12,6 +12,9 @@ import {
   commentsFetchError,
   commentsAreLoading,
   commentsFetched,
+  updateCommentVoteScoreError,
+  updatingCommentVoteScore,
+  updatedCommentVoteScore,
 } from './actions';
 import {
   createRequestInit,
@@ -51,7 +54,7 @@ const addComment = params => (dispatch) => {
     .catch((err) => {
       /* eslint-disable no-console */
       console.group('addComment error');
-      console.log('The next error happened when trying to add a comment');
+      console.log('An error occured when trying to add the comment');
       console.error(err);
       console.groupEnd();
       /* eslint-enable no-console */
@@ -131,9 +134,45 @@ const fetchComments = id => (dispatch) => {
     .catch(() => dispatch(commentsFetchError({ loadHasFailed: true })));
 };
 
+/**
+ * Update the voteScore of a comment
+ * @param {string} id id of the comment which `voteScore` is going to be updated
+ * @param {string} option a string representing the direction of the update:
+ * `upVote` or `downVote`
+ */
+const updateScore = (id, option) => (dispatch) => {
+  const { hostname } = window.location;
+  const url = `//${hostname}:3001/comments/${id}`;
+  const init = {
+    method: 'POST',
+    body: JSON.stringify({ option }),
+  };
+
+  dispatch(updatingCommentVoteScore({ isUpdatingScore: true }));
+
+  fetch(url, createRequestInit(init))
+    .then((response) => {
+      if (!response.ok) throw Error(response.statusText);
+      dispatch(updatingCommentVoteScore({ isUpdatingScore: false }));
+      return response;
+    })
+    .then(response => response.json())
+    .then(comment => dispatch(updatedCommentVoteScore({ comment })))
+    .catch((err) => {
+      /* eslint-disable no-console */
+      console.group('updateScore error');
+      console.log('An error occured when trying to update the comment score');
+      console.error(err);
+      console.groupEnd();
+      /* eslint-enable no-console */
+      dispatch(updateCommentVoteScoreError({ updateScoreHasFailed: true }));
+    });
+};
+
 export {
   addComment,
   deleteComment,
   editComment,
   fetchComments,
+  updateScore,
 };
