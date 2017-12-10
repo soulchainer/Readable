@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
-import { commentsOperations } from 'state/ducks/comments';
+import {
+  commentsOperations,
+  commentsSelectors,
+} from 'state/ducks/comments';
 import CommentList from 'views/components/CommentList';
 
 const mapStateToProps = ({
@@ -12,7 +15,7 @@ const mapStateToProps = ({
     loadHasFailed,
   },
 }, { postId }) => ({
-  comments,
+  comments: commentsSelectors.getVisibleComments(comments),
   status: {
     isAdding,
     isDeleting,

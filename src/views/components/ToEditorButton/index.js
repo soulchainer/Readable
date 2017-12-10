@@ -24,7 +24,8 @@ const ToEditorButton = ({
   content,
 }) => {
   const { altText } = actions[action];
-  const pathname = `${location.pathname}#${action}`;
+  const hash = (action !== 'editComment') ? `#${action}` : '';
+  const pathname = `${location.pathname}${hash}`;
   const hasContent = Object.keys(content);
   const to = {
     pathname,

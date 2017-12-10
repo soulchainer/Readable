@@ -18,7 +18,7 @@ const initialState = {
 const commentsReducer = createReducer(initialState)({
   [types.ADDED]: (state, { payload }) => ({
     ...state,
-    comments: [...state.comments, ...payload.comment],
+    comments: [...state.comments, payload.comment],
   }),
   [types.ADDING]: (state, { payload }) => ({
     ...state,
@@ -54,8 +54,8 @@ const commentsReducer = createReducer(initialState)({
   [types.EDITED]: (state, { payload }) => ({
     ...state,
     comments: state.comments.map((comment) => {
-      if (comment.id !== payload.id) return comment;
-      return { ...comment, ...payload };
+      if (comment.id !== payload.comment.id) return comment;
+      return { ...comment, ...payload.comment };
     }),
   }),
   [types.EDITING]: (state, { payload }) => ({

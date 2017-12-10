@@ -11,7 +11,7 @@ class PostEditor extends Component {
     const {
       location: { state: { action } },
       match: { params: { category: categoryPage } },
-    } = this.props;
+    } = props;
     const isEdit = action === 'editPost';
     const disabledInputs = {
       author: isEdit,
@@ -64,7 +64,7 @@ class PostEditor extends Component {
           this.setState({ errorMessage: 'There was an error adding the post' });
           return;
         }
-        /* The post add succeded, redirect to the previous page */
+        /* The post was added succesfully, redirect to the previous page */
         history.goBack();
       }
     } else if (isEditingChanged) {
@@ -74,7 +74,7 @@ class PostEditor extends Component {
           this.setState({ errorMessage: 'There was an error editing the post' });
           return;
         }
-        /* The post add succeded, redirect to the previous page */
+        /* The post edit succeded, redirect to the previous page */
         history.goBack();
       }
     }

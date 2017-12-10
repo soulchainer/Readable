@@ -48,7 +48,15 @@ const addComment = params => (dispatch) => {
     })
     .then(response => response.json())
     .then(comment => dispatch(commentAdded({ comment })))
-    .catch(() => dispatch(commentAddError({ addHasFailed: true })));
+    .catch((err) => {
+      /* eslint-disable no-console */
+      console.group('addComment error');
+      console.log('The next error happened when trying to add a comment');
+      console.error(err);
+      console.groupEnd();
+      /* eslint-enable no-console */
+      dispatch(commentAddError({ addHasFailed: true }));
+    });
 };
 
 /**

@@ -7,7 +7,7 @@ import {
 
 const Comments = ({ postId }) => (
   <div className="Comments">
-    <CommentEditor />
+    <CommentEditor parentId={postId} />
     <CommentList postId={postId} />
   </div>
 );
