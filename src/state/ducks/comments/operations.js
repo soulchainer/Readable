@@ -157,7 +157,7 @@ const updateScore = (id, option) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(comment => dispatch(updatedCommentVoteScore({ comment })))
+    .then(comment => dispatch(updatedCommentVoteScore(comment)))
     .catch((err) => {
       /* eslint-disable no-console */
       console.group('updateScore error');

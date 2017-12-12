@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 
 class VoteScore extends Component {
   state = {
-    votingDisabled: false,
-  }
+    isVotingDisabled: false,
+  };
 
-  componentWillReceiveProps(nextProps) {
-    const {
-      voteState: {
-        isUpdatingScore,
-        updateScoreHasFailed,
-      },
-    } = this.props;
+  componentWillReceiveProps({
+    voteState: {
+      isUpdatingScore: nextIsUpdatingScore,
+      updateScoreHasFailed,
+    },
+  }) {
+    const { voteState: { isUpdatingScore } } = this.props;
 
     /**
      * TODO: Add conditions to disable/enable buttons if `isUpdatingScore` and
@@ -21,39 +21,53 @@ class VoteScore extends Component {
      * Also apply this component to posts. Add an state for disable the buttons.
      */
 
-     /**
+    /**
      * TODO: Improve this. Add a loading message, maybe with a spinner,
      * notifying there is an edit/new comment addition in progress, via console?
      * Define the `toggleVotingDisabled` function.
      */
-    const isUpdatingScoreChanged = isUpdatingScore !== nextProps.isUpdatingScore;
-    const updateScoreEnd = isUpdatingScoreChanged && !nextProps.isUpdatingScore;
+    const isUpdatingScoreChanged = isUpdatingScore !== nextIsUpdatingScore;
 
     if (isUpdatingScoreChanged) {
       this.setState(this.toggleVotingDisabled);
     }
-    if (isUpdatingScoreChanged) {
-      if (updateScoreEnd) {
-        if (nextProps.updateScoreHasFailed) {
-          /* The voteScore update failed */
-          this.setState({
-            errorMessage: 'There was an error updating the comment score',
-          });
-        }
-        /* The voteScore was updated succesfully */
-      }
+    if (updateScoreHasFailed) {
+      // eslint-disable-next-line
+      console.error('There was an error updating the comment score');
     }
   }
 
-  downVote = () => this.props.updateScore('downVote');
-  upvote = () => this.props.updateScore('upVote');
+  downVote = () => {
+    this.props.updateScore('downVote');
+  }
+
+  toggleVotingDisabled = prevState => ({
+    ...prevState,
+    isVotingDisabled: !prevState.isVotingDisabled,
+  });
+
+  upVote = () => {
+    this.props.updateScore('upVote');
+  }
+
   render() {
     const { score } = this.props;
+    const { isVotingDisabled } = this.state;
     return (
       <div>
         <span>{score}</span>
-        <button onClick={this.upVote}>+</button>
-        <button onClick={this.downVote}>-</button>
+        <button
+          onClick={this.upVote}
+          disabled={isVotingDisabled}
+        >
+          +
+        </button>
+        <button
+          onClick={this.downVote}
+          disabled={isVotingDisabled}
+        >
+          -
+        </button>
       </div>
     );
   }
