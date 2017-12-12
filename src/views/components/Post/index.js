@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { VoteScore } from 'views/components';
 
 class Post extends Component {
   render() {
@@ -16,6 +17,8 @@ class Post extends Component {
         title,
         voteScore,
       },
+      updateScore,
+      voteState,
     } = this.props;
 
     let post;
@@ -43,7 +46,11 @@ class Post extends Component {
             {body}
           </div>
           <footer>
-            <div>{voteScore}</div>
+            <VoteScore
+              updateScore={updateScore}
+              score={voteScore}
+              voteState={voteState}
+            />
           </footer>
         </article>
       );
@@ -81,6 +88,11 @@ Post.propTypes = {
     title: PropTypes.string,
     voteScore: PropTypes.number,
   }),
+  updateScore: PropTypes.func.isRequired,
+  voteState: PropTypes.shape({
+    isUpdatingScore: PropTypes.bool,
+    updateScoreHasFailed: PropTypes.bool,
+  }).isRequired,
 };
 
 export default Post;

@@ -19,6 +19,9 @@ import {
   postDetailsFetched,
   postsFetchError,
   postsFetched,
+  updatePostVoteScoreError,
+  updatingPostVoteScore,
+  updatedPostVoteScore,
 } from './actions';
 
 /**
@@ -151,10 +154,46 @@ const fetchPosts = category => (dispatch) => {
     .catch(() => dispatch(postsFetchError({ loadHasFailed: true })));
 };
 
+/**
+ * Update the voteScore of a post
+ * @param {string} id id of the post which `voteScore` is going to be updated
+ * @param {string} option a string representing the direction of the update:
+ * `upVote` or `downVote`
+ */
+const updateScore = (id, option) => (dispatch) => {
+  const { hostname } = window.location;
+  const url = `//${hostname}:3001/posts/${id}`;
+  const init = {
+    method: 'POST',
+    body: JSON.stringify({ option }),
+  };
+
+  dispatch(updatingPostVoteScore({ isUpdatingScore: true }));
+
+  fetch(url, createRequestInit(init))
+    .then((response) => {
+      if (!response.ok) throw Error(response.statusText);
+      dispatch(updatingPostVoteScore({ isUpdatingScore: false }));
+      return response;
+    })
+    .then(response => response.json())
+    .then(post => dispatch(updatedPostVoteScore(post)))
+    .catch((err) => {
+      /* eslint-disable no-console */
+      console.group('updateScore error');
+      console.log('An error occured when trying to update the post score');
+      console.error(err);
+      console.groupEnd();
+      /* eslint-enable no-console */
+      dispatch(updatePostVoteScoreError({ updateScoreHasFailed: true }));
+    });
+};
+
 export {
   addPost,
   deletePost,
   editPost,
   fetchPostDetails,
   fetchPosts,
+  updateScore,
 };

@@ -62,4 +62,15 @@ export const FETCH_ERROR = 'posts/FETCH_ERROR';
  * Dispatched when an API call to fetch all posts is sent
  */
 export const LOADING = 'posts/LOADING';
-export const UPDATE_VOTE_SCORE = 'posts/UPDATE_VOTE_SCORE';
+/**
+ * Dispatched after a post `voteScore` is succesfully updated on the server
+ */
+export const UPDATED_VOTE_SCORE = 'posts/UPDATED_VOTE_SCORE';
+/**
+ * Dispatched when an API call to update a post `voteScore` is sent
+ */
+export const UPDATING_VOTE_SCORE = 'posts/UPDATING_VOTE_SCORE';
+/**
+ * Dispatched when an API call to update a post `voteScore` fails
+ */
+export const UPDATE_VOTE_SCORE_ERROR = 'posts/UPDATE_VOTE_SCORE_ERROR';

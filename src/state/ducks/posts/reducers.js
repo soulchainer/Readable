@@ -7,15 +7,17 @@ const initialState = {
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
-  loadDetailsHasFailed: false,
-  loadHasFailed: false,
   isAdding: false,
   isDeleting: false,
   isEditing: false,
   isLoading: false,
   isLoadingDetails: false,
+  isUpdatingScore: false,
+  loadDetailsHasFailed: false,
+  loadHasFailed: false,
   sortingMethod: 'voteScore',
   sortingDirection: 'DESC',
+  updateScoreHasFailed: false,
 };
 
 const postsReducer = createReducer(initialState)({
@@ -93,12 +95,21 @@ const postsReducer = createReducer(initialState)({
     ...state,
     isLoading: payload.isLoading,
   }),
-  [types.UPDATE_VOTE_SCORE]: (state, { payload }) => ({
+  [types.UPDATED_VOTE_SCORE]: (state, { payload }) => ({
     ...state,
     posts: state.posts.map((post) => {
-      if (payload.id !== post.id) return post;
+      if (post.id !== payload.id) return post;
       return { ...post, voteScore: payload.voteScore };
     }),
+    postDetails: { ...state.postDetails, voteScore: payload.voteScore },
+  }),
+  [types.UPDATING_VOTE_SCORE]: (state, { payload }) => ({
+    ...state,
+    isUpdatingScore: payload.isUpdatingScore,
+  }),
+  [types.UPDATE_VOTE_SCORE_ERROR]: (state, { payload }) => ({
+    ...state,
+    updateScoreHasFailed: payload.updateScoreHasFailed,
   }),
 });
 

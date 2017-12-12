@@ -50,9 +50,11 @@ export const postsFetchError = createAction(types.FETCH_ERROR);
 export const postsAreLoading = createAction(types.LOADING);
 export const postsFetched = createAction(types.FETCHED);
 /**
- * Will be dispatched from the `updateScore` thunk, triggered when the user
- * clicks on the buttons to update the `voteScore` of a post.
- * This make then an API request to update the post score.
- * params → type ('post'), id, string 'upVote' or 'downVote'.
+ * All of this actions will be dispatched from `updateScore` thunk, which
+ * makes an API request to update a post score (`voteScore`), triggered when
+ * the user clicks on the voting buttons.
+ * params → `id`, `option` (the `upVote` or `downVote` string)
  */
-export const updatePostVoteScore = createAction(types.UPDATE_VOTE_SCORE);
+export const updatePostVoteScoreError = createAction(types.UPDATE_VOTE_SCORE_ERROR);
+export const updatingPostVoteScore = createAction(types.UPDATING_VOTE_SCORE);
+export const updatedPostVoteScore = createAction(types.UPDATED_VOTE_SCORE);
