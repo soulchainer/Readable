@@ -77,7 +77,11 @@ class CommentEditor extends Component {
     } = this.props;
 
     history.replace(pathname);
-    this.setState({ author: '', body: '' });
+    this.setState({
+      author: '',
+      body: '',
+      isDisabledAuthor: false,
+    });
   };
 
   handleChange = (event) => {
@@ -145,9 +149,9 @@ class CommentEditor extends Component {
           <input
             onClick={this.clearData}
             disabled={isFormDisabled}
-            name="cancel"
+            name="clear"
             type="reset"
-            value="Cancel"
+            value="Clear"
           />
           <input
             disabled={isFormDisabled}

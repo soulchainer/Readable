@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { VoteScore } from 'views/containers';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const PostCard = ({
@@ -24,6 +25,11 @@ const PostCard = ({
       title: ${title}
       voteScore: ${voteScore}
     `}
+    <VoteScore
+      id={id}
+      score={voteScore}
+      type="posts"
+    />
     <Link to={`/${category}/${id}`}>Read More...</Link>
   </div>
 );

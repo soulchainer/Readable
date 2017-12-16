@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { ToEditorButton } from 'views/components';
 
 const action = {
-  comment: 'editComment',
-  post: 'editPost',
+  comments: 'editComment',
+  posts: 'editPost',
 };
 
 const EditionControls = ({

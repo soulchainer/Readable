@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import {
   EditionControls,
   VoteScore,
-} from 'views/components';
+} from 'views/containers';
 
-const Comment = ({
-  comment,
-  deleteComment,
-  updateScore,
-  voteState,
-}) => {
+const Comment = ({ comment }) => {
   const {
     id,
     body,
@@ -22,15 +17,15 @@ const Comment = ({
   return (
     <div className="Comment">
       <EditionControls
-        onDelete={deleteComment}
         content={comment}
-        type="comment"
+        id={id}
+        type="comments"
       />
       {JSON.stringify(comment)}
       <VoteScore
-        updateScore={updateScore}
+        id={id}
         score={voteScore}
-        voteState={voteState}
+        type="comments"
       />
     </div>
   );
@@ -48,11 +43,5 @@ Comment.propTypes = {
     parentId: PropTypes.string,
     timestamp: PropTypes.number,
     voteScore: PropTypes.number,
-  }).isRequired,
-  deleteComment: PropTypes.func.isRequired,
-  updateScore: PropTypes.func.isRequired,
-  voteState: PropTypes.shape({
-    isUpdatingScore: PropTypes.bool,
-    updateScoreHasFailed: PropTypes.bool,
   }).isRequired,
 };

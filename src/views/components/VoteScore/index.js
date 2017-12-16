@@ -73,9 +73,13 @@ class VoteScore extends Component {
   }
 }
 
+VoteScore.defaultProps = {
+  score: 0,
+};
+
 VoteScore.propTypes = {
   updateScore: PropTypes.func.isRequired,
-  score: PropTypes.number.isRequired,
+  score: PropTypes.number,
   voteState: PropTypes.shape({
     isUpdatingScore: PropTypes.bool,
     updateScoreHasFailed: PropTypes.bool,

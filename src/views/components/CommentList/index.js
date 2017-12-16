@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Comment } from 'views/containers';
+import { Comment } from 'views/components';
 
 class CommentList extends Component {
   componentDidMount() {

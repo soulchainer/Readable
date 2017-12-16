@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { postsOperations } from 'state/ducks/posts';
-import { Comments, Post, ToEditorButton } from 'views/components';
+import { Comments, Post /* , ToEditorButton  */} from 'views/components';
 import { CategoryList } from 'views/containers';
 // import styles from './styles';
 
@@ -30,32 +30,40 @@ class PostScreen extends Component {
   }
 
   render() {
-    const { postInfo } = this.props;
+    const {
+      match,
+      postInfo,
+    } = this.props;
+
+    const { postId } = match.params;
     const {
       isLoadingDetails,
       loadDetailsHasFailed,
-      postDetails,
+      /* postDetails, */
     } = postInfo;
 
     let comments;
-    let toEditorButton;
+    /* let toEditorButton; */
 
-    if (!isLoadingDetails && !loadDetailsHasFailed && postDetails) {
-      comments = <Comments postId={postDetails.id} />;
-      toEditorButton = (
+    if (!isLoadingDetails && !loadDetailsHasFailed/*  && postDetails */) {
+      comments = <Comments postId={/* postDetails.id */postId} />;
+      /* toEditorButton = (
         <ToEditorButton
           action="editPost"
           content={postDetails}
         />
-      );
+      ); */
     }
 
     return (
       <div className="PostScreen">
         <CategoryList />
-        <Post {...postInfo} />
+        <Post
+          postId={postId}
+          {...postInfo}
+        />
         {comments}
-        {toEditorButton}
+        {/* toEditorButton */}
         {/* <style jsx>{}</style> */}
       </div>
     );

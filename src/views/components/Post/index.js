@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { VoteScore } from 'views/components';
+import {
+  EditionControls,
+  VoteScore,
+} from 'views/containers';
 
 class Post extends Component {
   render() {
@@ -17,8 +20,8 @@ class Post extends Component {
         title,
         voteScore,
       },
-      updateScore,
-      voteState,
+      postDetails,
+      postId,
     } = this.props;
 
     let post;
@@ -47,9 +50,14 @@ class Post extends Component {
           </div>
           <footer>
             <VoteScore
-              updateScore={updateScore}
+              id={postId}
               score={voteScore}
-              voteState={voteState}
+              type="posts"
+            />
+            <EditionControls
+              content={postDetails}
+              id={postId}
+              type="posts"
             />
           </footer>
         </article>
@@ -88,11 +96,7 @@ Post.propTypes = {
     title: PropTypes.string,
     voteScore: PropTypes.number,
   }),
-  updateScore: PropTypes.func.isRequired,
-  voteState: PropTypes.shape({
-    isUpdatingScore: PropTypes.bool,
-    updateScoreHasFailed: PropTypes.bool,
-  }).isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 export default Post;
