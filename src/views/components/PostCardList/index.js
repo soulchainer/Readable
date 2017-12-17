@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { PostCard } from 'views/components';
+import { SortingtHat } from 'views/containers';
 
 class PostCardList extends Component {
   componentDidMount() {
@@ -21,11 +22,14 @@ class PostCardList extends Component {
       </li>
     ));
     return (
-      <ul className="PostCardList">
-        {isLoading}
-        {loadHasFailed}
-        {postCardList}
-      </ul>
+      <div className="PostCardList">
+        <SortingtHat type="posts" />
+        <ul className="PostCardList-list">
+          {isLoading}
+          {loadHasFailed}
+          {postCardList}
+        </ul>
+      </div>
     );
   }
 }

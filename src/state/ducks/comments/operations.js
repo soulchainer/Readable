@@ -1,25 +1,23 @@
 import uuidv4 from 'uuid/v4';
-import {
-  commentAddError,
-  commentAdded,
-  commentAdding,
-  commentDeleteError,
-  commentDeleting,
-  commentDeleted,
-  commentEditError,
-  commentEditing,
-  commentEdited,
-  commentsFetchError,
-  commentsAreLoading,
-  commentsFetched,
-  updateCommentVoteScoreError,
-  updatingCommentVoteScore,
-  updatedCommentVoteScore,
-} from './actions';
+import * as actions from './actions';
 import {
   createRequestInit,
   getTimestamp,
 } from '../../utils';
+
+// Links to simple actions
+
+/**
+ * Change the sorting direction for the comment list.
+ */
+const { changeCommentsSortingDirection } = actions;
+
+/**
+ * Change the sorting method for the comment list.
+ */
+const { changeCommentsSortingMethod } = actions;
+
+// Thunks
 
 /**
  * Add a comment to a post.
@@ -41,16 +39,16 @@ const addComment = params => (dispatch) => {
     }),
   };
 
-  dispatch(commentAdding({ isAdding: true }));
+  dispatch(actions.commentAdding({ isAdding: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentAdding({ isAdding: false }));
+      dispatch(actions.commentAdding({ isAdding: false }));
       return response;
     })
     .then(response => response.json())
-    .then(comment => dispatch(commentAdded({ comment })))
+    .then(comment => dispatch(actions.commentAdded({ comment })))
     .catch((err) => {
       /* eslint-disable no-console */
       console.group('addComment error');
@@ -58,7 +56,7 @@ const addComment = params => (dispatch) => {
       console.error(err);
       console.groupEnd();
       /* eslint-enable no-console */
-      dispatch(commentAddError({ addHasFailed: true }));
+      dispatch(actions.commentAddError({ addHasFailed: true }));
     });
 };
 
@@ -71,17 +69,17 @@ const deleteComment = id => (dispatch) => {
   const { hostname } = window.location;
   const url = `//${hostname}:3001/comments/${id}`;
   const init = { method: 'DELETE' };
-  dispatch(commentDeleting({ isDeleting: true }));
+  dispatch(actions.commentDeleting({ isDeleting: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentDeleting({ isDeleting: false }));
+      dispatch(actions.commentDeleting({ isDeleting: false }));
       return response;
     })
     .then(response => response.json())
-    .then(() => dispatch(commentDeleted({ id })))
-    .catch(() => dispatch(commentDeleteError({ deleteHasFailed: true })));
+    .then(() => dispatch(actions.commentDeleted({ id })))
+    .catch(() => dispatch(actions.commentDeleteError({ deleteHasFailed: true })));
 };
 
 /**
@@ -100,17 +98,17 @@ const editComment = (id, { body }) => (dispatch) => {
       body,
     }),
   };
-  dispatch(commentEditing({ isEditing: true }));
+  dispatch(actions.commentEditing({ isEditing: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentEditing({ isEditing: false }));
+      dispatch(actions.commentEditing({ isEditing: false }));
       return response;
     })
     .then(response => response.json())
-    .then(comment => dispatch(commentEdited({ comment })))
-    .catch(() => dispatch(commentEditError({ editHasFailed: true })));
+    .then(comment => dispatch(actions.commentEdited({ comment })))
+    .catch(() => dispatch(actions.commentEditError({ editHasFailed: true })));
 };
 
 /**
@@ -121,17 +119,17 @@ const fetchComments = id => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}/comments`;
-  dispatch(commentsAreLoading({ isLoading: true }));
+  dispatch(actions.commentsAreLoading({ isLoading: true }));
 
   fetch(url, createRequestInit())
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(commentsAreLoading({ isLoading: false }));
+      dispatch(actions.commentsAreLoading({ isLoading: false }));
       return response;
     })
     .then(response => response.json())
-    .then(comments => dispatch(commentsFetched({ comments })))
-    .catch(() => dispatch(commentsFetchError({ loadHasFailed: true })));
+    .then(comments => dispatch(actions.commentsFetched({ comments })))
+    .catch(() => dispatch(actions.commentsFetchError({ loadHasFailed: true })));
 };
 
 /**
@@ -148,16 +146,16 @@ const updateScore = (id, option) => (dispatch) => {
     body: JSON.stringify({ option }),
   };
 
-  dispatch(updatingCommentVoteScore({ isUpdatingScore: true }));
+  dispatch(actions.updatingCommentVoteScore({ isUpdatingScore: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(updatingCommentVoteScore({ isUpdatingScore: false }));
+      dispatch(actions.updatingCommentVoteScore({ isUpdatingScore: false }));
       return response;
     })
     .then(response => response.json())
-    .then(comment => dispatch(updatedCommentVoteScore(comment)))
+    .then(comment => dispatch(actions.updatedCommentVoteScore(comment)))
     .catch((err) => {
       /* eslint-disable no-console */
       console.group('updateScore error');
@@ -165,12 +163,14 @@ const updateScore = (id, option) => (dispatch) => {
       console.error(err);
       console.groupEnd();
       /* eslint-enable no-console */
-      dispatch(updateCommentVoteScoreError({ updateScoreHasFailed: true }));
+      dispatch(actions.updateCommentVoteScoreError({ updateScoreHasFailed: true }));
     });
 };
 
 export {
   addComment,
+  changeCommentsSortingDirection,
+  changeCommentsSortingMethod,
   deleteComment,
   editComment,
   fetchComments,

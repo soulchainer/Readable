@@ -6,4 +6,5 @@ export { default as EditionControls } from './EditionControls';
 export { default as PostCardList } from './PostCardList';
 export { default as PostEditor } from './PostEditor';
 export { default as Root } from './Root';
+export { default as SortingtHat } from './SortingtHat';
 export { default as VoteScore } from './VoteScore';

@@ -5,6 +5,11 @@ import {
 } from 'state/ducks/comments';
 import CommentList from 'views/components/CommentList';
 
+const {
+  getSortedComments,
+  getVisibleComments,
+} = commentsSelectors;
+
 const mapStateToProps = ({
   comments: {
     comments,
@@ -13,9 +18,14 @@ const mapStateToProps = ({
     isEditing,
     isLoading,
     loadHasFailed,
+    sortingDirection,
+    sortingMethod,
   },
 }, { postId }) => ({
-  comments: commentsSelectors.getVisibleComments(comments),
+  comments: getSortedComments(getVisibleComments(comments), {
+    sortingDirection,
+    sortingMethod,
+  }),
   status: {
     isAdding,
     isDeleting,

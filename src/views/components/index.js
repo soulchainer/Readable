@@ -9,5 +9,6 @@ export { default as EditionControls } from './EditionControls';
 export { default as Post } from './Post';
 export { default as PostCard } from './PostCard';
 export { default as PostCardList } from './PostCardList';
+export { default as SortingtHat } from './SortingtHat';
 export { default as ToEditorButton } from './ToEditorButton';
 export { default as VoteScore } from './VoteScore';

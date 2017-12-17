@@ -3,26 +3,21 @@ import {
   createRequestInit,
   getTimestamp,
 } from 'state/utils';
-import {
-  postAddError,
-  postAdded,
-  postAdding,
-  postsAreLoading,
-  postDeleteError,
-  postDeleted,
-  postDeleting,
-  postEditError,
-  postEdited,
-  postEditing,
-  postDetailsAreLoading,
-  postDetailsFetchError,
-  postDetailsFetched,
-  postsFetchError,
-  postsFetched,
-  updatePostVoteScoreError,
-  updatingPostVoteScore,
-  updatedPostVoteScore,
-} from './actions';
+import * as actions from './actions';
+
+// Links to simple actions
+
+/**
+ * Change the sorting direction for the post list.
+ */
+const { changePostsSortingDirection } = actions;
+
+/**
+ * Change the sorting method for the post list.
+ */
+const { changePostsSortingMethod } = actions;
+
+// Thunks
 
 /**
  * Add a new post.
@@ -46,17 +41,17 @@ const addPost = params => (dispatch) => {
     }),
   };
 
-  dispatch(postAdding({ isAdding: true }));
+  dispatch(actions.postAdding({ isAdding: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(postAdding({ isAdding: false }));
+      dispatch(actions.postAdding({ isAdding: false }));
       return response;
     })
     .then(response => response.json())
-    .then(post => dispatch(postAdded({ post })))
-    .catch(() => dispatch(postAddError({ addHasFailed: true })));
+    .then(post => dispatch(actions.postAdded({ post })))
+    .catch(() => dispatch(actions.postAddError({ addHasFailed: true })));
 };
 
 /**
@@ -68,17 +63,17 @@ const deletePost = id => (dispatch) => {
   const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}`;
   const init = { method: 'DELETE' };
-  dispatch(postDeleting({ isDeleting: true }));
+  dispatch(actions.postDeleting({ isDeleting: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(postDeleting({ isDeleting: false }));
+      dispatch(actions.postDeleting({ isDeleting: false }));
       return response;
     })
     .then(response => response.json())
-    .then(() => dispatch(postDeleted({ id })))
-    .catch(() => dispatch(postDeleteError({ deleteHasFailed: true })));
+    .then(() => dispatch(actions.postDeleted({ id })))
+    .catch(() => dispatch(actions.postDeleteError({ deleteHasFailed: true })));
 };
 
 /**
@@ -98,17 +93,17 @@ const editPost = (id, params) => (dispatch) => {
       ...params,
     }),
   };
-  dispatch(postEditing({ isEditing: true }));
+  dispatch(actions.postEditing({ isEditing: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(postEditing({ isEditing: false }));
+      dispatch(actions.postEditing({ isEditing: false }));
       return response;
     })
     .then(response => response.json())
-    .then(post => dispatch(postEdited({ post })))
-    .catch(() => dispatch(postEditError({ editHasFailed: true })));
+    .then(post => dispatch(actions.postEdited({ post })))
+    .catch(() => dispatch(actions.postEditError({ editHasFailed: true })));
 };
 
 /**
@@ -119,17 +114,17 @@ const fetchPostDetails = id => (dispatch) => {
   /** Hostname of the app */
   const { hostname } = window.location;
   const url = `//${hostname}:3001/posts/${id}`;
-  dispatch(postDetailsAreLoading({ isLoadingDetails: true }));
+  dispatch(actions.postDetailsAreLoading({ isLoadingDetails: true }));
 
   fetch(url, createRequestInit())
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(postDetailsAreLoading({ isLoadingDetails: false }));
+      dispatch(actions.postDetailsAreLoading({ isLoadingDetails: false }));
       return response;
     })
     .then(response => response.json())
-    .then(postDetails => dispatch(postDetailsFetched({ postDetails })))
-    .catch(() => dispatch(postDetailsFetchError({ loadDetailsHasFailed: true })));
+    .then(postDetails => dispatch(actions.postDetailsFetched({ postDetails })))
+    .catch(() => dispatch(actions.postDetailsFetchError({ loadDetailsHasFailed: true })));
 };
 
 /**
@@ -141,17 +136,17 @@ const fetchPosts = category => (dispatch) => {
   const { hostname } = window.location;
   const categoryPathChunk = category ? `${category}/` : '';
   const url = `//${hostname}:3001/${categoryPathChunk}posts`;
-  dispatch(postsAreLoading({ isLoading: true }));
+  dispatch(actions.postsAreLoading({ isLoading: true }));
 
   fetch(url, createRequestInit())
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(postsAreLoading({ isLoading: false }));
+      dispatch(actions.postsAreLoading({ isLoading: false }));
       return response;
     })
     .then(response => response.json())
-    .then(posts => dispatch(postsFetched({ posts })))
-    .catch(() => dispatch(postsFetchError({ loadHasFailed: true })));
+    .then(posts => dispatch(actions.postsFetched({ posts })))
+    .catch(() => dispatch(actions.postsFetchError({ loadHasFailed: true })));
 };
 
 /**
@@ -168,16 +163,16 @@ const updateScore = (id, option) => (dispatch) => {
     body: JSON.stringify({ option }),
   };
 
-  dispatch(updatingPostVoteScore({ isUpdatingScore: true }));
+  dispatch(actions.updatingPostVoteScore({ isUpdatingScore: true }));
 
   fetch(url, createRequestInit(init))
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
-      dispatch(updatingPostVoteScore({ isUpdatingScore: false }));
+      dispatch(actions.updatingPostVoteScore({ isUpdatingScore: false }));
       return response;
     })
     .then(response => response.json())
-    .then(post => dispatch(updatedPostVoteScore(post)))
+    .then(post => dispatch(actions.updatedPostVoteScore(post)))
     .catch((err) => {
       /* eslint-disable no-console */
       console.group('updateScore error');
@@ -185,12 +180,14 @@ const updateScore = (id, option) => (dispatch) => {
       console.error(err);
       console.groupEnd();
       /* eslint-enable no-console */
-      dispatch(updatePostVoteScoreError({ updateScoreHasFailed: true }));
+      dispatch(actions.updatePostVoteScoreError({ updateScoreHasFailed: true }));
     });
 };
 
 export {
   addPost,
+  changePostsSortingDirection,
+  changePostsSortingMethod,
   deletePost,
   editPost,
   fetchPostDetails,
