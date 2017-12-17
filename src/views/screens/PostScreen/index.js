@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { postsOperations } from 'state/ducks/posts';
-import { Comments, Post /* , ToEditorButton  */} from 'views/components';
+import { Comments, Post } from 'views/components';
 import { CategoryList } from 'views/containers';
 // import styles from './styles';
 
@@ -35,37 +36,39 @@ class PostScreen extends Component {
       postInfo,
     } = this.props;
 
-    const { postId } = match.params;
+    const {
+      category,
+      postId,
+    } = match.params;
     const {
       isLoadingDetails,
       loadDetailsHasFailed,
-      /* postDetails, */
+      postDetails,
     } = postInfo;
 
-    let comments;
-    /* let toEditorButton; */
+    const postDetailsEmpty = !Object.keys(postDetails).length;
+    const postNotFound = !isLoadingDetails && !loadDetailsHasFailed && postDetailsEmpty;
 
-    if (!isLoadingDetails && !loadDetailsHasFailed/*  && postDetails */) {
-      comments = <Comments postId={/* postDetails.id */postId} />;
-      /* toEditorButton = (
-        <ToEditorButton
-          action="editPost"
-          content={postDetails}
-        />
-      ); */
+    let comments;
+
+    if (!isLoadingDetails && !loadDetailsHasFailed) {
+      comments = <Comments postId={postId} />;
     }
 
     return (
-      <div className="PostScreen">
-        <CategoryList />
-        <Post
-          postId={postId}
-          {...postInfo}
-        />
-        {comments}
-        {/* toEditorButton */}
-        {/* <style jsx>{}</style> */}
-      </div>
+      postNotFound
+        ?
+          <Redirect to={`/${category}`} />
+        :
+          <div className="PostScreen">
+            <CategoryList />
+            <Post
+              postId={postId}
+              {...postInfo}
+            />
+            {comments}
+            {/* <style jsx>{}</style> */}
+          </div>
     );
   }
 }
