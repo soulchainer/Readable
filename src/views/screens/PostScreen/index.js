@@ -46,8 +46,7 @@ class PostScreen extends Component {
       postDetails,
     } = postInfo;
 
-    const postDetailsEmpty = !Object.keys(postDetails).length;
-    const postNotFound = !isLoadingDetails && !loadDetailsHasFailed && postDetailsEmpty;
+    const postNotFound = loadDetailsHasFailed && Object.keys(postDetails).length === 0;
 
     let comments;
 
