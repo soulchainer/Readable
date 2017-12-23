@@ -124,7 +124,10 @@ const fetchPostDetails = id => (dispatch) => {
     })
     .then(response => response.json())
     .then(postDetails => dispatch(actions.postDetailsFetched({ postDetails })))
-    .catch(() => dispatch(actions.postDetailsFetchError({ loadDetailsHasFailed: true })));
+    .catch(() => {
+      dispatch(actions.postDetailsAreLoading({ isLoadingDetails: false }));
+      dispatch(actions.postDetailsFetchError({ loadDetailsHasFailed: true }));
+    });
 };
 
 /**
