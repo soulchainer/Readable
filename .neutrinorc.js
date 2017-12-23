@@ -1,10 +1,9 @@
 
-const { entryDev, entryVendor } = require('./constants');
+const { entryVendor } = require('./constants');
 
 module.exports = {
   use: [
     'neutrino-preset-react',
-    entryDev,
     entryVendor,
     'neutrino-preset-airbnb',
     'neutrino-preset-styled-jsx',
