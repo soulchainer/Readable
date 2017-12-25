@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ToEditorButton } from 'views/components';
-import {
-  CategoryList,
-  PostCardList,
-} from 'views/containers';
+import { Header, ToEditorButton } from 'views/components';
+import { PostCardList } from 'views/containers';
 // import styles from './styles';
 
 const CategoryScreen = ({ match }) => {
   const { category } = match.params;
   return (
-    <div className="CategoryScreen">
-      <CategoryList />
+    <div className="Screen CategoryScreen">
+      <Header />
       <PostCardList category={category} />
       <ToEditorButton
         action="addPost"

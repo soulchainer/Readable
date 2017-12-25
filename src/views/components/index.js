@@ -6,6 +6,7 @@ export { default as CommentEditor } from './CommentEditor';
 export { default as Comments } from './Comments';
 export { default as CommentList } from './CommentList';
 export { default as EditionControls } from './EditionControls';
+export { default as Header } from './Header';
 export { default as Post } from './Post';
 export { default as PostCard } from './PostCard';
 export { default as PostCardList } from './PostCardList';

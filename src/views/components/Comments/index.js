@@ -7,11 +7,32 @@ import {
 } from 'views/containers';
 
 const Comments = ({ postId }) => (
-  <div className="Comments">
-    <SortingtHat type="comments" />
+  <section className="Comments">
+    <h2 className="Comments-title">Comments</h2>
     <CommentEditor parentId={postId} />
+    <SortingtHat type="comments" />
     <CommentList postId={postId} />
-  </div>
+    <style jsx>
+      {`
+        .Comments {
+          align-self: center;
+          display: flex;
+          flex-direction: column;
+          max-width: 80vw;
+          padding: 1rem;
+          width: 800px;
+        }
+
+        .Comments-title {
+          align-self: center;
+          border-bottom: 4px solid #01b3e3;
+          font-size: 1.4rem;
+          font-variant: small-caps;
+          margin-bottom: 0.5rem;
+        }
+      `}
+    </style>
+  </section>
 );
 
 Comments.defaultProps = {

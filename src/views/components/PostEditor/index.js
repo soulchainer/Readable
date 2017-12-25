@@ -24,7 +24,7 @@ class PostEditor extends Component {
     const {
       author = '',
       body = '',
-      category = '',
+      category = 'react',
       title = '',
     } = props.postInfo;
 
@@ -129,11 +129,15 @@ class PostEditor extends Component {
     } = this.state;
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div className="PostEditor">
+        <form
+          onSubmit={this.handleSubmit}
+          className="PostEditor-form"
+        >
           <label htmlFor="author">Author</label>
           <input
             onChange={this.handleChange}
+            className="PostEditor-form-item"
             disabled={disabled.author || isFormDisabled}
             id="author"
             name="author"
@@ -143,6 +147,7 @@ class PostEditor extends Component {
           <label htmlFor="category">Category</label>
           <select
             onChange={this.handleChange}
+            className="PostEditor-form-item"
             disabled={disabled.category || isFormDisabled}
             id="category"
             name="category"
@@ -162,6 +167,7 @@ class PostEditor extends Component {
           <label htmlFor="title">Title</label>
           <input
             onChange={this.handleChange}
+            className="PostEditor-form-item"
             disabled={isFormDisabled}
             id="title"
             name="title"
@@ -171,12 +177,14 @@ class PostEditor extends Component {
           <label htmlFor="body">Body</label>
           <textarea
             onChange={this.handleChange}
+            className="PostEditor-form-item"
             disabled={isFormDisabled}
             id="body"
             name="body"
             value={this.state.body}
           />
           <input
+            className="PostEditor-form-submit"
             disabled={isFormDisabled}
             name="submit"
             type="submit"
@@ -184,6 +192,53 @@ class PostEditor extends Component {
           />
         </form>
         <span>{errorMessage}</span>
+        <style jsx>
+          {`
+            label {
+              margin-bottom: 0.2rem;
+            }
+
+            textarea {
+              max-width: 100%;
+              resize: vertical;
+            }
+
+            .PostEditor {
+              align-self: center;
+              max-width: 90vw;
+              width: 800px;
+            }
+
+            .PostEditor,
+            .PostEditor-form {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 1rem;
+            }
+
+            .PostEditor-form-item {
+              margin-bottom: 0.5rem;
+            }
+
+            .PostEditor-form-submit {
+              align-self: center;
+              background-color: #1ba949;
+              color: #fff;
+              font-weight: 700;
+              letter-spacing: 2px;
+              margin: 0.5rem;
+              max-width: 100%;
+              padding: 0.5rem;
+              width: 125px;
+            }
+
+            .PostEditor-form-submit:active,
+            .PostEditor-form-submit:focus,
+            .PostEditor-form-submit:hover {
+              box-shadow: .2rem .2rem 0 #0c4a20;
+            }
+          `}
+        </style>
       </div>
     );
   }

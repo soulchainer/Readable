@@ -11,6 +11,11 @@ module.exports = {
     'custom-presets/absolute-imports',
     (neutrino)=>{
       neutrino.config.output.publicPath('/');
-    }
+    },
+    ['@neutrinojs/html-template', {
+      links: [
+        'https://fonts.googleapis.com/css?family=Exo:400,400i,700|Vollkorn:600',
+      ]
+    }]
   ]
 };

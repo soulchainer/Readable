@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, withRouter } from 'react-router';
-import {
-  CategoryList,
-  PostEditor,
-} from 'views/containers';
-// import styles from './styles';
+import { Header } from 'views/components';
+import { PostEditor } from 'views/containers';
 
 const PostEditorScreen = ({ location: { state } }) => {
   const redirect = <Redirect to="/" />;
@@ -14,8 +11,8 @@ const PostEditorScreen = ({ location: { state } }) => {
     const legalAction = ['addPost', 'editPost'].indexOf(action) > -1;
     if (legalAction) {
       return (
-        <div className="PostScreen">
-          <CategoryList />
+        <div className="Screen PostScreen">
+          <Header />
           <PostEditor postInfo={content} />
           {/* <style jsx>{}</style> */}
         </div>

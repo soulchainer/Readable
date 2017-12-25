@@ -1,14 +1,11 @@
 import React from 'react';
-import { ToEditorButton } from 'views/components';
-import {
-  CategoryList,
-  PostCardList,
-} from 'views/containers';
+import { Header, ToEditorButton } from 'views/components';
+import { PostCardList } from 'views/containers';
 // import styles from './styles';
 
 const HomeScreen = () => (
-  <div className="HomeScreen">
-    <CategoryList />
+  <div className="Screen HomeScreen">
+    <Header />
     <PostCardList />
     <ToEditorButton action="addPost" />
     {/* <style jsx>{}</style> */}

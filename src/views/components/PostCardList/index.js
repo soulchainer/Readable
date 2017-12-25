@@ -29,6 +29,21 @@ class PostCardList extends Component {
           {loadHasFailed}
           {postCardList}
         </ul>
+        <style jsx>
+          {`
+            .PostCardList {
+              display: flex;
+              flex-direction: column;
+              padding: 1rem;
+            }
+
+            .PostCardList-list {
+              display: flex;
+              flex-wrap: wrap;
+              list-style: none;
+            }
+          `}
+        </style>
       </div>
     );
   }

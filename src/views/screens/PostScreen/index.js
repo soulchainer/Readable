@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { postsOperations } from 'state/ducks/posts';
-import { Comments, Post } from 'views/components';
-import { CategoryList } from 'views/containers';
-// import styles from './styles';
+import { Comments, Header, Post } from 'views/components';
 
 const mapStateToProps = ({
   posts: {
@@ -59,8 +57,8 @@ class PostScreen extends Component {
         ?
           <Redirect to={`/${category}`} />
         :
-          <div className="PostScreen">
-            <CategoryList />
+          <div className="Screen PostScreen">
+            <Header />
             <Post
               postId={postId}
               {...postInfo}

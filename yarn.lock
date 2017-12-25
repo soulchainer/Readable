@@ -55,6 +55,14 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@neutrinojs/html-template@^8.0.14":
+  version "8.0.14"
+  resolved "https://registry.yarnpkg.com/@neutrinojs/html-template/-/html-template-8.0.14.tgz#eebdf310706a220ff38cf71e87112b5355de6cbd"
+  dependencies:
+    deepmerge "^1.5.2"
+    html-webpack-plugin "^2.30.1"
+    html-webpack-template "^6.1.0"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -1409,6 +1417,10 @@ clap@^1.0.9:
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
   dependencies:
     chalk "^1.1.3"
+
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-css@4.1.x:
   version "4.1.9"
@@ -3012,6 +3024,10 @@ html-webpack-plugin@^2.30.1:
 html-webpack-template@^5.6.0:
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/html-webpack-template/-/html-webpack-template-5.6.2.tgz#0980df2a25e36cf8a85d7495e23a0e002974b6a2"
+
+html-webpack-template@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/html-webpack-template/-/html-webpack-template-6.1.0.tgz#d96ffdab53131adfa672f981988607807966ad97"
 
 htmlparser2@~3.3.0:
   version "3.3.0"

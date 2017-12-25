@@ -4,6 +4,7 @@ import {
   EditionControls,
   VoteScore,
 } from 'views/containers';
+import getReadableDate from 'views/utils/getReadableDate';
 
 class Post extends Component {
   render() {
@@ -14,7 +15,6 @@ class Post extends Component {
         author,
         body,
         category,
-        commentCount,
         deleted,
         timestamp,
         title,
@@ -37,10 +37,15 @@ class Post extends Component {
         >
           <header className="Post-header">
             <h1 className="Post-title">{title}</h1>
-            <span className="Post-category">{category}</span>
-            <div className="Post-headerMetadata">
-              <span>{commentCount} </span>- <span>{author} </span>-
-              <time dateTime={new Date(timestamp)}> {timestamp}</time>
+            <div className="Post-metadata">
+              <span className="Post-metadata-author">@{author}</span>
+              <time
+                className="Post-metadata-time"
+                dateTime={new Date(timestamp)}
+              >
+                {getReadableDate(timestamp)}
+              </time>
+              <span className="Post-metadata-category">{category}</span>
             </div>
           </header>
           <div>
@@ -48,7 +53,7 @@ class Post extends Component {
             {loadDetailsHasFailed}
             {body}
           </div>
-          <footer>
+          <footer className="Post-footer">
             <VoteScore
               id={postId}
               score={voteScore}
@@ -60,6 +65,67 @@ class Post extends Component {
               type="posts"
             />
           </footer>
+          <style jsx>
+            {`
+              .Post {
+                align-self: center;
+                border: 1px solid #e6edf1;
+                display: flex;
+                flex-direction: column;
+                margin: 10px;
+                max-width: 90vw;
+                padding: 1rem;
+                width: 800px;
+              }
+      
+              .Post-title {
+                color: #01b3e3;
+                font-size: 1.4rem;
+                margin-bottom: 0.5rem;
+              }
+      
+              .Post-metadata {
+                align-items: center;
+                color: #adadad;
+                display: flex;
+                flex-wrap: wrap;
+                font-size: 0.9rem;
+                font-style: italic;
+                font-weight: 400;
+                margin-left: 0.5rem;
+              }
+      
+              .Post-metadata-author {
+                color: #d23282;
+                font-weigth: 700;
+              }
+      
+              .Post-metadata-time {
+                padding: 0 10px;
+              }
+      
+              .Post-metadata-category {
+                border-radius: 2px;
+                background-color: #01a4d2;
+                font-variant: all-small-caps;
+                font-weight: 200;
+                color: #fff;
+                display: inline-block;
+                margin: 5px 0 5px 0.5rem;
+                padding: 2px 5px;
+              }
+      
+              .Post-body {
+                color: #696969;
+                padding: 1rem 0;
+              }
+
+              .Post-footer {
+                display: flex;
+                justify-content: space-between;
+              }
+            `}
+          </style>
         </article>
       );
     }

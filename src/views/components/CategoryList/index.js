@@ -11,11 +11,23 @@ class CategoryList extends Component {
   render() {
     const { categories, isLoading, loadHasFailed } = this.props;
     const categoryList = Object.keys(categories).map(category => (
-      <li key={category}>
+      <li
+        className="CategoryList-item"
+        key={category}
+      >
         <Category
           name={category}
           path={categories[category]}
         />
+        <style jsx>
+          {`
+            .CategoryList-item {
+              box-sizing: border-box;
+              display: inline-block;
+              padding: 1rem;
+            }
+          `}
+        </style>
       </li>
     ));
     return (
@@ -23,6 +35,18 @@ class CategoryList extends Component {
         {isLoading}
         {loadHasFailed}
         {categoryList}
+        <style jsx>
+          {`
+            .CategoryList {
+              background-color: #f0f8ff;
+              border: 1px solid #f0f0f0;
+              display: flex;
+              justify-content: center;
+              list-style: none;
+              width: 100%;
+            }
+          `}
+        </style>
       </ul>
     );
   }

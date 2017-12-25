@@ -17,7 +17,13 @@ module.exports = neutrino => {
           "required": {
             "some": [ "nesting", "id" ]
           },
-        }]
+        }],
+        // Consider «to» attribute of <Link> as its «href»
+        "jsx-a11y/anchor-is-valid": [ "error", {
+          "components": [ "Link" ],
+          "specialLink": [ "to", "hrefLeft", "hrefRight" ],
+          "aspects": [ "noHref", "invalidHref", "preferButton" ]
+        }],
       }),
       settings: {'import/core-modules': ['styled-jsx/css'] }
     }));

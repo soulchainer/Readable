@@ -127,11 +127,15 @@ class CommentEditor extends Component {
       isFormDisabled,
     } = this.state;
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div className="CommentEditor">
+        <form
+          onSubmit={this.handleSubmit}
+          className="CommentEditor-form"
+        >
           <label htmlFor="author">Author</label>
           <input
             onChange={this.handleChange}
+            className="CommentEditor-form-item"
             disabled={isDisabledAuthor || isFormDisabled}
             id="author"
             name="author"
@@ -141,26 +145,90 @@ class CommentEditor extends Component {
           <label htmlFor="body">Body</label>
           <textarea
             onChange={this.handleChange}
+            className="CommentEditor-form-item"
             disabled={isFormDisabled}
             id="body"
             name="body"
             value={this.state.body}
           />
-          <input
-            onClick={this.clearData}
-            disabled={isFormDisabled}
-            name="clear"
-            type="reset"
-            value="Clear"
-          />
-          <input
-            disabled={isFormDisabled}
-            name="submit"
-            type="submit"
-            value="Submit"
-          />
+          <div className="CommentEditor-buttons">
+            <input
+              onClick={this.clearData}
+              className="CommentEditor-button CommentEditor-button--reset"
+              disabled={isFormDisabled}
+              name="clear"
+              type="reset"
+              value="Clear"
+            />
+            <input
+              className="CommentEditor-button CommentEditor-button--submit"
+              disabled={isFormDisabled}
+              name="submit"
+              type="submit"
+              value="Submit"
+            />
+          </div>
         </form>
         <span>{errorMessage}</span>
+        <style jsx>
+          {`
+            label {
+              margin-bottom: 0.2rem;
+            }
+
+            textarea {
+              max-width: 100%;
+              resize: vertical;
+            }
+
+            .CommentEditor,
+            .CommentEditor-form {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 1rem;
+            }
+
+            .CommentEditor-form-item {
+              margin-bottom: 0.5rem;
+            }
+
+            .CommentEditor-buttons {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+            }
+
+            .CommentEditor-button {
+              color: #fff;
+              font-weight: 700;
+              letter-spacing: 2px;
+              margin: 0.5rem;
+              max-width: 100%;
+              padding: 0.5rem;
+              width: 125px;
+            }
+
+            .CommentEditor-button--reset {
+              background-color: #ec7a19;
+            }
+
+            .CommentEditor-button--reset:active,
+            .CommentEditor-button--reset:focus,
+            .CommentEditor-button--reset:hover {
+              box-shadow: .2rem .2rem 0 #c76715;
+            }
+
+            .CommentEditor-button--submit {
+              background-color: #1ba949;
+            }
+
+            .CommentEditor-button--submit:active,
+            .CommentEditor-button--submit:focus,
+            .CommentEditor-button--submit:hover {
+              box-shadow: .2rem .2rem 0 #0c4a20;
+            }
+          `}
+        </style>
       </div>
     );
   }
