@@ -28,3 +28,16 @@ for fixing them T_T). But, on the other hand, I'm glad for taking this
 decission. I really like this approach and I couldn't fiddle with this at work.
 I will be using it again in the future and solve the problems I face in this
 project and learn from them :).
+
+## Credits
+
+The SVG icons used in the app are from the following icon sets
+(I link to their respective licenses in each case):
+
+- [Feather](https://github.com/feathericons/feather). [MIT License](https://github.com/feathericons/feather#license)
+- [IcoMoon - Free](https://icomoon.io/#icons-icomoon). [GPL / CC BY 4.0](https://icomoon.io/#icons-icomoon).
+
+Both selected and modified via the great [Icomoon](https://icomoon.io/app/)
+webapp.
+
+Anyways, I will use them just for this learning exercise.
