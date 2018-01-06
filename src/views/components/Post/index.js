@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CommentCounter } from 'views/components';
 import {
   EditionControls,
   VoteScore,
@@ -15,6 +16,7 @@ class Post extends Component {
         author,
         body,
         category,
+        commentCount,
         deleted,
         timestamp,
         title,
@@ -46,6 +48,10 @@ class Post extends Component {
                 {getReadableDate(timestamp)}
               </time>
               <span className="Post-metadata-category">{category}</span>
+              <CommentCounter
+                commentCount={commentCount}
+                postURL={`/${category}/${postId}`}
+              />
             </div>
           </header>
           <div>

@@ -1,4 +1,5 @@
 import { createReducer } from 'state/utils';
+import { commentsTypes } from 'state/ducks/comments';
 import * as types from './types';
 
 const initialState = {
@@ -21,6 +22,20 @@ const initialState = {
 };
 
 const postsReducer = createReducer(initialState)({
+  [commentsTypes.ADDED]: state => ({
+    ...state,
+    postDetails: {
+      ...state.postDetails,
+      commentCount: state.postDetails.commentCount + 1,
+    },
+  }),
+  [commentsTypes.DELETED]: state => ({
+    ...state,
+    postDetails: {
+      ...state.postDetails,
+      commentCount: state.postDetails.commentCount - 1,
+    },
+  }),
   [types.ADDED]: (state, { payload }) => ({
     ...state,
     posts: [...state.posts, payload.post],

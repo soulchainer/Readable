@@ -44,7 +44,7 @@ class CommentList extends Component {
       />
     ));
 
-    return commentList;
+    return <div id="Comments">{commentList}</div>;
   }
 }
 

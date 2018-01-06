@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { CommentCounter } from 'views/components';
 import { VoteScore } from 'views/containers';
 import getReadableDate from 'views/utils/getReadableDate';
 
@@ -9,6 +10,7 @@ const PostCard = ({
   author,
   body,
   category,
+  commentCount,
   id,
   timestamp,
   title,
@@ -26,6 +28,10 @@ const PostCard = ({
           {getReadableDate(timestamp)}
         </time>
         <span className="PostCard-metadata-category">{category}</span>
+        <CommentCounter
+          commentCount={commentCount}
+          postURL={`/${category}/${id}`}
+        />
       </div>
     </header>
     <div className="PostCard-body">
@@ -117,6 +123,7 @@ PostCard.propTypes = {
   author: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
+  commentCount: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
