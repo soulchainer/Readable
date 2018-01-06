@@ -200,6 +200,7 @@ class CommentEditor extends Component {
 
             .CommentEditor-button {
               color: #fff;
+              cursor: pointer;
               font-weight: 700;
               letter-spacing: 2px;
               margin: 0.5rem;

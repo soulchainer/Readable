@@ -15,7 +15,7 @@ class PostEditor extends Component {
     const isEdit = action === 'editPost';
     const disabledInputs = {
       author: isEdit,
-      category: (isEdit || categoryPage),
+      category: (isEdit || typeof categoryPage === 'string'),
     };
     /**
      * This default values shouldn't be necessary, but doesn't matter what I do,

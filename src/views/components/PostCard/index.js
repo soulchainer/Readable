@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { CommentCounter } from 'views/components';
-import { VoteScore } from 'views/containers';
+import {
+  EditionControls,
+  VoteScore,
+} from 'views/containers';
 import getReadableDate from 'views/utils/getReadableDate';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -11,6 +14,7 @@ const PostCard = ({
   body,
   category,
   commentCount,
+  deleted,
   id,
   timestamp,
   title,
@@ -47,6 +51,21 @@ const PostCard = ({
       <VoteScore
         id={id}
         score={voteScore}
+        type="posts"
+      />
+      <EditionControls
+        content={{
+          author,
+          body,
+          category,
+          commentCount,
+          deleted,
+          id,
+          timestamp,
+          title,
+          voteScore,
+        }}
+        id={id}
         type="posts"
       />
     </footer>
@@ -109,6 +128,11 @@ const PostCard = ({
           padding: 1rem 0;
         }
 
+        .PostCard-footer {
+          display: flex;
+          justify-content: space-between;
+        }
+
         :global(.PostCard-readmore) {
           display: flex;
           margin: 1rem 0;
@@ -124,6 +148,7 @@ PostCard.propTypes = {
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
+  deleted: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,

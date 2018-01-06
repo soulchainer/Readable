@@ -64,6 +64,10 @@ const App = () => (
             flex-direction: column;
             width: 100vw;
           }
+
+          .icon {
+            height: 100%;
+          }
         `}
       </style>
     </div>

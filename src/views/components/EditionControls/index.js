@@ -45,8 +45,11 @@ class EditionControls extends Component {
           });
           return;
         }
-        /* The post was succesfully deleted, redirect to the category page */
-        history.replace(`/${category}`);
+        /**
+         * The post was succesfully deleted, redirect to the category page if
+         * on a PostScreen or to the main page if not
+         */
+        history.replace(`/${typeof category === 'string' ? category : ''}`);
       }
     }
   }
@@ -86,6 +89,7 @@ class EditionControls extends Component {
           {`
             :global(.EditionControls-deleteButton) {
               align-self: right;
+              cursor: pointer;
               display: inline-flex;
               padding: 0.5rem;
               word-break: break-all;

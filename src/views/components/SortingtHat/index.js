@@ -120,6 +120,7 @@ class SortingtHat extends Component {
             }
 
             .iconButton {
+              cursor: pointer;
               display: inline-block;
               padding: 0.5rem;
               word-break: break-all;
