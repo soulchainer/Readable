@@ -67,6 +67,8 @@ class EditionControls extends Component {
       type,
     } = this.props;
 
+    const pathname = `/${content.category}/${content.id}`;
+
     return (
       <span className="EditionControls">
         <span
@@ -84,6 +86,7 @@ class EditionControls extends Component {
           action={action[type]}
           className="EditionControls-editButton"
           content={content}
+          pathname={pathname}
         />
         <style jsx>
           {`

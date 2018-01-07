@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class PostEditor extends Component {
+  static defaultProps = {
+    postInfo: {
+      author: '',
+      body: '',
+      category: 'react',
+      title: '',
+    },
+  };
+
   constructor(props) {
     super(props);
     /**
@@ -17,15 +26,11 @@ class PostEditor extends Component {
       author: isEdit,
       category: (isEdit || typeof categoryPage === 'string'),
     };
-    /**
-     * This default values shouldn't be necessary, but doesn't matter what I do,
-     * it won't get the `defaultProps`. TODO: Investigate later.
-     */
     const {
-      author = '',
-      body = '',
-      category = 'react',
-      title = '',
+      author,
+      body,
+      category,
+      title,
     } = props.postInfo;
 
     this.state = {
@@ -243,15 +248,6 @@ class PostEditor extends Component {
     );
   }
 }
-
-PostEditor.defaultProps = {
-  postInfo: {
-    author: '',
-    body: '',
-    category: '',
-    title: '',
-  },
-};
 
 /* eslint-disable react/forbid-prop-types */
 PostEditor.propTypes = {

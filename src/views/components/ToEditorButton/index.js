@@ -41,18 +41,19 @@ const actions = {
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const ToEditorButton = ({
   action,
-  location,
   content,
+  location,
+  pathname,
 }) => {
   const {
     altText,
     icon,
   } = actions[action];
   const hash = (action !== 'editComment') ? `#${action}` : '';
-  const pathname = `${location.pathname}${hash}`;
+  const path = `${pathname || location.pathname}${hash}`;
   const hasContent = Object.keys(content);
   const to = {
-    pathname,
+    pathname: path,
     state: {
       action,
       content: hasContent ? content : null,
@@ -137,6 +138,7 @@ const ToEditorButton = ({
 
 ToEditorButton.defaultProps = {
   content: {},
+  pathname: '',
 };
 
 ToEditorButton.propTypes = {
@@ -144,11 +146,17 @@ ToEditorButton.propTypes = {
    * Name of the action to be done.
    */
   action: PropTypes.oneOf(['addPost', 'editComment', 'editPost']).isRequired,
-  location: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  /* eslint-disable react/forbid-prop-types */
   /**
    * Info of the comment or post being edited, to prefill the `form` fields.
    */
-  content: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  content: PropTypes.object,
+  location: PropTypes.object.isRequired,
+  /**
+   * Pathname of the post, util for `editPost` actions comming form a post list
+   */
+  pathname: PropTypes.string,
+  /* eslint-enable react/forbid-prop-types */
 };
 
 export default withRouter(ToEditorButton);
