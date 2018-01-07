@@ -5,6 +5,7 @@ import * as types from './types';
 const initialState = {
   posts: [], // all posts list
   postDetails: {}, // post details (current view is a post details view)
+  postDetailsFetched: false,
   addHasFailed: false,
   deleteHasFailed: false,
   editHasFailed: false,
@@ -35,6 +36,7 @@ const postsReducer = createReducer(initialState)({
       ...state.postDetails,
       commentCount: state.postDetails.commentCount - 1,
     },
+    postDetailsFetched: false,
   }),
   [types.ADDED]: (state, { payload }) => ({
     ...state,
@@ -74,10 +76,12 @@ const postsReducer = createReducer(initialState)({
   [types.DETAILS_FETCHED]: (state, { payload }) => ({
     ...state,
     postDetails: payload.postDetails,
+    postDetailsFetched: true,
   }),
   [types.DETAILS_LOADING]: (state, { payload }) => ({
     ...state,
     isLoadingDetails: payload.isLoadingDetails,
+    postDetailsFetched: false,
   }),
   [types.EDITED]: (state, { payload }) => ({
     ...state,

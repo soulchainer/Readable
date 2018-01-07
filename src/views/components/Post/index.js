@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CommentCounter } from 'views/components';
 import {
@@ -7,151 +7,130 @@ import {
 } from 'views/containers';
 import getReadableDate from 'views/utils/getReadableDate';
 
-class Post extends Component {
-  render() {
-    const {
-      isLoadingDetails,
-      loadDetailsHasFailed,
-      postDetails: {
-        author,
-        body,
-        category,
-        commentCount,
-        deleted,
-        timestamp,
-        title,
-        voteScore,
-      },
-      postDetails,
-      postId,
-    } = this.props;
+const Post = (props) => {
+  const {
+    isLoadingDetails,
+    loadDetailsHasFailed,
+    postDetails: {
+      author,
+      body,
+      category,
+      commentCount,
+      timestamp,
+      title,
+      voteScore,
+    },
+    postDetails,
+    postId,
+  } = props;
 
-    let post;
+  return (
+    <article
+      className="Post"
+      role="main"
+    >
+      <header className="Post-header">
+        <h1 className="Post-title">{title}</h1>
+        <div className="Post-metadata">
+          <span className="Post-metadata-author">@{author}</span>
+          <time
+            className="Post-metadata-time"
+            dateTime={new Date(timestamp)}
+          >
+            {getReadableDate(timestamp)}
+          </time>
+          <span className="Post-metadata-category">{category}</span>
+          <CommentCounter
+            commentCount={commentCount}
+            postURL={`/${category}/${postId}`}
+          />
+        </div>
+      </header>
+      <div>
+        {isLoadingDetails}
+        {loadDetailsHasFailed}
+        {body}
+      </div>
+      <footer className="Post-footer">
+        <VoteScore
+          id={postId}
+          score={voteScore}
+          type="posts"
+        />
+        <EditionControls
+          content={postDetails}
+          id={postId}
+          type="posts"
+        />
+      </footer>
+      <style jsx>
+        {`
+          .Post {
+            align-self: center;
+            border: 1px solid #e6edf1;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            max-width: 90vw;
+            padding: 1rem;
+            width: 800px;
+          }
+  
+          .Post-title {
+            color: #01b3e3;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+          }
+  
+          .Post-metadata {
+            align-items: center;
+            color: #adadad;
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            font-style: italic;
+            font-weight: 400;
+            margin-left: 0.5rem;
+          }
+  
+          .Post-metadata-author {
+            color: #d23282;
+            font-weigth: 700;
+          }
+  
+          .Post-metadata-time {
+            padding: 0 10px;
+          }
+  
+          .Post-metadata-category {
+            border-radius: 2px;
+            background-color: #01a4d2;
+            font-variant: all-small-caps;
+            font-weight: 200;
+            color: #fff;
+            display: inline-block;
+            margin: 5px 0 5px 0.5rem;
+            padding: 2px 5px;
+          }
+  
+          .Post-body {
+            color: #696969;
+            padding: 1rem 0;
+          }
 
-    if (deleted) {
-      const errorMessage = 'This post doesn\'t exist.';
-      post = <div>{errorMessage}</div>;
-    } else {
-      post = (
-        <article
-          className="Post"
-          role="main"
-        >
-          <header className="Post-header">
-            <h1 className="Post-title">{title}</h1>
-            <div className="Post-metadata">
-              <span className="Post-metadata-author">@{author}</span>
-              <time
-                className="Post-metadata-time"
-                dateTime={new Date(timestamp)}
-              >
-                {getReadableDate(timestamp)}
-              </time>
-              <span className="Post-metadata-category">{category}</span>
-              <CommentCounter
-                commentCount={commentCount}
-                postURL={`/${category}/${postId}`}
-              />
-            </div>
-          </header>
-          <div>
-            {isLoadingDetails}
-            {loadDetailsHasFailed}
-            {body}
-          </div>
-          <footer className="Post-footer">
-            <VoteScore
-              id={postId}
-              score={voteScore}
-              type="posts"
-            />
-            <EditionControls
-              content={postDetails}
-              id={postId}
-              type="posts"
-            />
-          </footer>
-          <style jsx>
-            {`
-              .Post {
-                align-self: center;
-                border: 1px solid #e6edf1;
-                display: flex;
-                flex-direction: column;
-                margin: 10px;
-                max-width: 90vw;
-                padding: 1rem;
-                width: 800px;
-              }
-      
-              .Post-title {
-                color: #01b3e3;
-                font-size: 1.4rem;
-                margin-bottom: 0.5rem;
-              }
-      
-              .Post-metadata {
-                align-items: center;
-                color: #adadad;
-                display: flex;
-                flex-wrap: wrap;
-                font-size: 0.9rem;
-                font-style: italic;
-                font-weight: 400;
-                margin-left: 0.5rem;
-              }
-      
-              .Post-metadata-author {
-                color: #d23282;
-                font-weigth: 700;
-              }
-      
-              .Post-metadata-time {
-                padding: 0 10px;
-              }
-      
-              .Post-metadata-category {
-                border-radius: 2px;
-                background-color: #01a4d2;
-                font-variant: all-small-caps;
-                font-weight: 200;
-                color: #fff;
-                display: inline-block;
-                margin: 5px 0 5px 0.5rem;
-                padding: 2px 5px;
-              }
-      
-              .Post-body {
-                color: #696969;
-                padding: 1rem 0;
-              }
-
-              .Post-footer {
-                display: flex;
-                justify-content: space-between;
-              }
-            `}
-          </style>
-        </article>
-      );
-    }
-    return post;
-  }
-}
+          .Post-footer {
+            display: flex;
+            justify-content: space-between;
+          }
+        `}
+      </style>
+    </article>
+  );
+};
 
 Post.defaultProps = {
   isLoadingDetails: false,
   loadDetailsHasFailed: false,
-  postDetails: {
-    author: '',
-    body: '',
-    category: '',
-    commentCount: 0,
-    deleted: false,
-    timestamp: Date.now(),
-    title: '',
-    voteScore: 0,
-  },
 };
 
 Post.propTypes = {
@@ -167,7 +146,7 @@ Post.propTypes = {
     timestamp: PropTypes.number,
     title: PropTypes.string,
     voteScore: PropTypes.number,
-  }),
+  }).isRequired,
   postId: PropTypes.string.isRequired,
 };
 

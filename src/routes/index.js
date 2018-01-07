@@ -1,6 +1,7 @@
 import {
   CategoryScreen,
   HomeScreen,
+  PageNotFoundScreen,
   PostEditorScreen,
   PostScreen,
 } from 'views/screens';
@@ -10,6 +11,11 @@ const routes = [
     component: HomeScreen,
     exact: true,
     path: '/',
+  },
+  {
+    component: PageNotFoundScreen,
+    exact: true,
+    path: '/pageNotFound',
   },
   {
     component: PostEditorScreen,
